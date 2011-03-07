@@ -16,25 +16,23 @@ public class DataSpider {
 		int jidu;
 		int i = 0;
 		int j = 0 ;
-		System.out.println("输入股票代码");
+		System.out.println("Enter the Stock Code");
 		daima = sc.nextInt();
-		System.out.println("输入要插入的年份");
+		System.out.println("Enter Year");
 		year = sc.nextInt();
-		System.out.println("输入要插入的季度");
+    System.out.println("Enter the Season:");
 		jidu = sc.nextInt();
 			
-		//网页地址
-		URL gupiao = new URL("http://money.finance.sina.com.cn/corp/go.php/vMS_MarketHistory/stockid/600000.phtml?year=2011&jidu=1");
-		//创建输入流
+		// Get the Data
+		URL gupiao = new URL("http://money.finance.sina.com.cn/corp/go.php/vMS_MarketHistory/stockid/"+daima+".phtml?year="+year+"&jidu="+jidu);
+		// Read Line By Line
 		BufferedReader br = new BufferedReader(new InputStreamReader(gupiao.openStream()));
-		//创建输出文档	
 		FileOutputStream fosout = new FileOutputStream("C:\\a.txt");
 		File file=new File("C:\\b.txt");
-		FileReader fr=new FileReader(file);//创建文件输入流 
-		BufferedReader in=new BufferedReader(br);//包装文件输入流，整行读取
+		FileReader fr=new FileReader(file);
+		BufferedReader in=new BufferedReader(br);
 		OutputStreamWriter owsout = new OutputStreamWriter(fosout);
-		while ((str = in.readLine()) != null){
-			
+		while ((str = in.readLine()) != null){ 	
 	 		owsout.write(str);
 			owsout.write("\r\n") ;
 		}
