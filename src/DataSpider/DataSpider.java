@@ -1,3 +1,4 @@
+package BigWise.DataSpider;
 import java.net.*;
 import java.io.*;
 import java.util.regex.*;
@@ -7,27 +8,12 @@ import java.util.Scanner;
 public class DataSpider {
 	public static void main(String[] args) throws IOException {
 
-		Scanner sc = new Scanner(System.in);
-		String s;
-		String str = null;
-		String str1 = null;
-		int daima;
-		int year;
-		int jidu;
-		int i = 0;
-		int j = 0 ;
-		System.out.println("Enter the Stock Code");
-		daima = sc.nextInt();
-		System.out.println("Enter Year");
-		year = sc.nextInt();
-    System.out.println("Enter the Season:");
-		jidu = sc.nextInt();
-			
+		String str = "";
 		// Get the Data
-		URL gupiao = new URL("http://money.finance.sina.com.cn/corp/go.php/vMS_MarketHistory/stockid/"+daima+".phtml?year="+year+"&jidu="+jidu);
+		URL gupiao = new URL("http://hq.sinajs.cn/list=sh601006");
 		// Read Line By Line
 		BufferedReader br = new BufferedReader(new InputStreamReader(gupiao.openStream()));
-		FileOutputStream fosout = new FileOutputStream("C:\\a.txt");
+		FileOutputStream fosout = new FileOutputStream(".\\a.txt");
 		File file=new File("C:\\b.txt");
 		FileReader fr=new FileReader(file);
 		BufferedReader in=new BufferedReader(br);
