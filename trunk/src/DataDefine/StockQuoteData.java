@@ -1,7 +1,5 @@
 package BigWise.DataDefine;
 
-import java.util.Date;
-
 /*
  * http://hq.sinajs.cn/list=sh601006
 这个url会返回一串文本，例如：
@@ -38,14 +36,21 @@ var hq_str_sh601006="大秦铁路, 27.55, 27.25, 26.91, 27.55, 26.20, 26.91, 26.92,
  */
 public class StockQuoteData 
 {
-	String strStockCode;			// 股票代码
-	Date dateStockDate;				// 日期
-	Date timeStockTime;				// 日期
-	double dOpenPriceToday;			// 今日开盘价
-	double dClosePriceYestoday;		// 昨日收盘价
-	double dCurrentPrice;			// 当前价格格
-	double dHighPriceToday;			// 今日最高价格
-	double dLowPriceToday;			// 今日最低价格
-	double dTradeAcount;			// 今日交易量
-	double dTotalTrade;				// 今日交易金额
+	public String StockCode;				// 股票代码
+	public String StockName;				// 股票名称
+	public String StockDate;				// 日期
+	public String StockTime;				// 日期
+	public double OpenPriceToday;			// 今日开盘价
+	public double ClosePriceYestoday;		// 昨日收盘价
+	public double CurrentPrice;				// 当前价格格
+	public double HighPriceToday;			// 今日最高价格
+	public double LowPriceToday;			// 今日最低价格
+	public double TradeAccount;				// 今日交易量
+	public double TotalTrade;				// 今日交易金额
+	
+	public String toString()
+	{
+		return StockCode + " | " + StockName + " | " + StockDate + " | " + StockTime + " | " + OpenPriceToday + " | " + ClosePriceYestoday + " | " + CurrentPrice + " | "
+		+ HighPriceToday + " | " + LowPriceToday + " | " + TotalTrade + " | " + TradeAccount;
+	}
 }
