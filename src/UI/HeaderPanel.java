@@ -49,7 +49,6 @@ public class HeaderPanel extends JPanel implements ActionListener {
 	    
 	    String[] columnNames = {"a","b","c"};
 	    int len = columnNames.length;
-	    Vector columnNamesV = new Vector
 	    
 	    Vector columnNamesV = new Vector(Arrays.asList(columnNames));
 
