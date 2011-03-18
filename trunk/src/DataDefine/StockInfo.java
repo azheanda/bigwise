@@ -1,103 +1,172 @@
 package BigWise.DataDefine;
 
+import java.util.Vector;
+import BigWise.Utility.DBUtil;
+import java.sql.*;
 public class StockInfo {
 	
-	// 深A
-	public static  String[][] shStock = {
-		{"600000","浦发银行","sh"},
-		{"600036","招商银行","sh"},
-		{"601939","建设银行","sh"},
-		{"601328","交通银行","sh"},
-		{"601398","工商银行","sh"},
-		{"601288","农业银行","sh"}
-	};
+	public String code;				// 股票名称
+	public String name;				// 股票代码
+	public String market;				// 股票市场
+	public String industry;					// 股票行业（行业板块）
+	public String province;					// 股票的省份（省份板块）
 	
-	// 沪A
-	public static String[][] szStock = {
-		{"000001","深发展A","sz"},
-		{"002142","宁波银行","sz"}
-	};
-	
-	public static String[][] zxb =
+	// 全属性的股票列表
+	public StockInfo(String code,String name, String market, String industry, String province)
 	{
+		this.code = code;
+		this.name = name;
+		this.market = market;
+		this.industry = industry;
+		this.province = province;
+	}
+	// 根据关键值获取码值
+	public static int getStockListNumberByKeyword(String type,String keyword)
+	{
+		Vector<StockInfo> StockList = getStockListByKeyword(type,keyword);
+		return StockList.size();
+	}
+	// type包括市场，行业和地区
+	public static Vector<StockInfo> getStockListByKeyword(String type, String keyword)
+	{
+		Vector<StockInfo> StockList = new Vector<StockInfo>();
+		try
+		{
+			Connection conn = DBUtil.getDbConn();
+			
+			Statement stmt = conn.createStatement();
+			ResultSet stockdata;
+			//System.out.println(market);
+			if(keyword != "*")
+				stockdata = stmt.executeQuery("select * from stockinfo where "+ type + "='"+ keyword + "';");
+			else
+				stockdata = stmt.executeQuery("select * from stockinfo");
+			while (stockdata.next()) 
+			 {
+			       String code = stockdata.getString("code");
+			       String name = stockdata.getString("name");
+			       String market = stockdata.getString("market");
+			       String industry = stockdata.getString("industry");
+			       String province = stockdata.getString("province");
+			       
+			      
+			       StockInfo  stockinfo = new StockInfo(code,name,market,industry,province);
+			       //System.out.println(stockinfo.code );
+			       StockList.add(stockinfo);
+			  } 
+			stockdata.close();
+			stmt.close();
+			DBUtil.closeConnection(conn);
+		}
+		catch (SQLException ex)
+		{
+			System.out.println("failed");
+		}
+		return StockList;
 		
-	};
-	
-	// 获取不同的市场的股票的数量，码值
-	public static int GetStockNumberByMarket(String market)
-	{
-		if(market == "sh")
-			return shStock.length;
-		else if(market == "sz")
-			return szStock.length;
-		else if(market == "all")
-			return shStock.length + szStock.length;
-		return 0;
-	}
-	// 获取股票的代码
-	public static String[] getStockCodesByMarket(String market)
-	{
-		if(market == "sh")
-		{
-			String[] StockCodes = new String[shStock.length];
-			for(int i = 0; i < StockCodes.length; ++i)
-				StockCodes[i] = shStock[i][0];
-			return StockCodes;
-		}
-		else if(market == "sz")
-		{
-			String[] StockCodes = new String[szStock.length];
-			for(int i = 0; i < StockCodes.length; ++i)
-				StockCodes[i] = szStock[i][0];
-			return StockCodes;
-		}
-		else if(market == "all")
-		{
-			String[] StockCodes = new String[szStock.length + shStock.length];
-			for(int i = 0; i < shStock.length; ++i)
-				StockCodes[i] = shStock[i][0];
-			for(int i = 0; i < szStock.length; ++i)
-				StockCodes[i+shStock.length] = szStock[i][0];
-			return StockCodes;
-		}
-		return null;
 	}
 	
-	// 获取股票的名称
-	public static String[] getStockNamesByMarket(String market)
+	// 所有股票的名称
+	public static Vector<String> getStockNameList()
 	{
-		if(market == "sh")
+		Vector<String> StockNameList = new Vector<String>();
+		try
 		{
-			String[] StockNames = new String[shStock.length];
-			for(int i = 0; i < StockNames.length; ++i)
-				StockNames[i] = shStock[i][1];
-			return StockNames;
+			Connection conn = DBUtil.getDbConn();
+			
+			Statement stmt = conn.createStatement();
+			ResultSet stockdata;
+			//System.out.println(market);
+				stockdata = stmt.executeQuery("select name from stockinfo");
+
+			while (stockdata.next()) 
+			 {
+			       String name = stockdata.getString("name");
+
+			       //System.out.println(stockinfo.code );
+			       StockNameList.add(name);
+			  } 
+			stockdata.close();
+			stmt.close();
+			DBUtil.closeConnection(conn);
 		}
-		else if(market == "sz")
+		catch (SQLException ex)
 		{
-			String[] StockNames = new String[szStock.length];
-			for(int i = 0; i < StockNames.length; ++i)
-				StockNames[i] = szStock[i][1];
-			return StockNames;
+			System.out.println("failed");
 		}
-		else if(market == "all")
-		{
-			String[] StockNames = new String[szStock.length + shStock.length];
-			for(int i = 0; i < shStock.length; ++i)
-				StockNames[i] = shStock[i][1];
-			for(int i = 0; i < szStock.length; ++i)
-				StockNames[i+shStock.length] = szStock[i][1];
-			return StockNames;
-		}
-		return null;
+		return StockNameList;	
 	}
+	// 所有股票的代码
+	public static Vector<String> getStockCodeList()
+	{
+		Vector<String> StockNameList = new Vector<String>();
+		try
+		{
+			Connection conn = DBUtil.getDbConn();
+			
+			Statement stmt = conn.createStatement();
+			ResultSet stockdata;
+			//System.out.println(market);
+				stockdata = stmt.executeQuery("select code from stockinfo");
+
+			while (stockdata.next()) 
+			 {
+			       String code = stockdata.getString("code");
+
+			       //System.out.println(stockinfo.code );
+			       StockNameList.add(code);
+			  } 
+			stockdata.close();
+			stmt.close();
+			DBUtil.closeConnection(conn);
+		}
+		catch (SQLException ex)
+		{
+			System.out.println("failed");
+		}
+		return StockNameList;	
+	}
+	// 获取所有类型的 子类  类型包括：市场，板块，省份
+	public static Vector<String> getTypeList(String type)
+	{
+		Vector<String> IndustryList = new Vector<String>();
+		try
+		{
+			Connection conn = DBUtil.getDbConn();
+			
+			Statement stmt = conn.createStatement();
+			ResultSet stockdata = stmt.executeQuery("select distinct "+ type +" from stockinfo;");
+
+			while (stockdata.next()) 
+			{
+				IndustryList.add(stockdata.getString(type));
+			} 
+			
+			stockdata.close();
+			stmt.close();
+			DBUtil.closeConnection(conn);
+		}
+		catch (SQLException ex)
+		{
+			System.out.println("failed");
+		}
+
+		return IndustryList;
+	}
+	
+	
+	
+	
 	public static void main(String args[])
 	{
-		StockInfo s = new StockInfo();
-		for(int i = 0; i < StockInfo.GetStockNumberByMarket("all") ; i ++ )
+
+		Vector<String> NameList = StockInfo.getStockNameList();
+
+		Vector<String> CodeList = StockInfo.getStockCodeList();
+		for(int i = 0; i < NameList.size(); ++i)
 		{
-		System.out.print(StockInfo.getStockCodesByMarket("all")[i] + "/");
-		System.out.println(StockInfo.getStockNamesByMarket("all")[i]);
+			System.out.print(NameList.elementAt(i));
+			System.out.println(CodeList.elementAt(i));
 		}
 	}
 

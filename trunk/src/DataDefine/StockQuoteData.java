@@ -47,10 +47,10 @@ public class StockQuoteData
 	public double LowPriceToday;			// 今日最低价格
 	public double TradeAccount;				// 今日交易量
 	public double TotalTrade;				// 今日交易金额
-	
+	public int	StockColor;					// 0是白色，1是红色，2是绿色
 	public String toString()
 	{
 		return StockCode + " | " + StockName + " | " + StockDate + " | " + StockTime + " | " + OpenPriceToday + " | " + ClosePriceYestoday + " | " + CurrentPrice + " | "
-		+ HighPriceToday + " | " + LowPriceToday + " | " + TotalTrade + " | " + TradeAccount;
+		+ HighPriceToday + " | " + LowPriceToday + " | " + TotalTrade + " | " + TradeAccount + "| "+ StockColor;
 	}
 }
