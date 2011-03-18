@@ -28,6 +28,8 @@ import java.lang.Math;
 
 public class HistoryDataBodyPanel extends JPanel implements ActionListener,ListSelectionListener{
    
+	HistoryController hc;
+	
 	private static double ROWPERPAGE = 19;
 	public int total = 0;
 	public int current = 0;
@@ -45,12 +47,24 @@ public class HistoryDataBodyPanel extends JPanel implements ActionListener,ListS
     Object columnNames[] = { "ID","日期", "开盘价", "收盘价","最高价","最低价","总手(万)","金额(亿)"};
     JButton bNext = new JButton("下一页");
     JButton bPrevious = new JButton("上一页");
-	public HistoryDataBodyPanel()
+	
+    public HistoryDataBodyPanel()
 	{
+		hc = new HistoryController() {
 			
-		GetData();	
-		DefaultTableModel model = GetModel();
-	    tTable = makeTable(model);
+			@Override
+			public void refresh() {
+				System.out.println("update");
+				DefaultTableModel updateModel = GetModel(hc.HistoryDataList);
+			    tTable = makeTable(updateModel);
+			    pContentPane.getViewport().add(tTable,null);
+			    pContentPane.validate();
+			}
+		};
+
+		DefaultTableModel model = GetModel(hc.HistoryDataList);
+	    
+		tTable = makeTable(model);
 	    pContentPane = new JScrollPane(tTable);
 	    pContentPane.setPreferredSize(new   Dimension(1000,600));
 	    
@@ -67,48 +81,30 @@ public class HistoryDataBodyPanel extends JPanel implements ActionListener,ListS
 		
 	}
 	
-	// 获取数据
-	public void GetData()
-	{
-		HistoryDataSpider hds = new HistoryDataSpider();
-		
-		HistoryDataList = hds.extractor("600000","", "");
-		
-		System.out.println(HistoryDataList.size());
-//		for(int i = 0 ; i < HistoryDataList.size(); ++ i)
-//		{
-//			System.out.println(HistoryDataList.elementAt(i).StockDate);
-//		}
-		
-		// 算出总数，求出第一页
-		total = (int)Math.ceil(HistoryDataList.size()/ROWPERPAGE);
-		//System.out.println(total);
-		current = 1;
-	}
 	
 	// 设置模型
-	public DefaultTableModel GetModel()
+	public DefaultTableModel GetModel(Vector<StockHistoryData> list)
 	{
-		
+		System.out.println(list.size());
 		//内容栏
 	    int column = columnNames.length;
 	    
 	    int row	= (int)ROWPERPAGE;
-	    if(current == total)
+	    if(hc.current == hc.total)
 	    {
-	    	row = HistoryDataList.size() % row;
+	    	row = list.size() % row;
 	    }
 	    //System.out.println(column + " " + row);
 	    Object[][] rowData =  new Object[row][column];
 	    int begin =0 , end = 0;
-	    begin = (int)((current-1)*ROWPERPAGE);
-	    if(current == total)
+	    begin = (int)((hc.current-1)*ROWPERPAGE);
+	    if(hc.current == hc.total)
 	    {
-	    	end = HistoryDataList.size();
+	    	end = list.size();
 	    }
 	    else
 	    {
-	    	end = (int)(current*ROWPERPAGE);
+	    	end = (int)(hc.current*ROWPERPAGE);
 	    }
 	    
 	    for(int i = begin ; i < end ; ++i)
@@ -116,7 +112,7 @@ public class HistoryDataBodyPanel extends JPanel implements ActionListener,ListS
 	    	int ID = (int)(i % ROWPERPAGE);
 	    	
 	    	DecimalFormat df = new DecimalFormat("0.00");
-	    	StockHistoryData historyData = HistoryDataList.elementAt(i);
+	    	StockHistoryData historyData = list.elementAt(i);
 	    	//System.out.println(historyData.StockDate);
 	    	rowData[ID][0] = i + 1;
 	    	rowData[ID][1] = historyData.StockDate;
@@ -136,10 +132,10 @@ public class HistoryDataBodyPanel extends JPanel implements ActionListener,ListS
 		
 		if(e.getSource() == bNext)
 		{
-			current += 1;
-			if(current > total)
+			hc.current += 1;
+			if(hc.current > hc.total)
 			{
-				current = total;
+				hc.current = hc.total;
 				bNext.setEnabled(false);
 				bPrevious.setEnabled(true);
 				return;
@@ -153,10 +149,10 @@ public class HistoryDataBodyPanel extends JPanel implements ActionListener,ListS
 		}
 		else if(e.getSource() == bPrevious)
 		{
-			current -= 1;
-			if(current <= 0)
+			hc.current -= 1;
+			if(hc.current <= 0)
 			{
-				current = 1;
+				hc.current = 1;
 				bPrevious.setEnabled(false);
 				bNext.setEnabled(true);
 				return;
@@ -168,7 +164,7 @@ public class HistoryDataBodyPanel extends JPanel implements ActionListener,ListS
 			//System.out.println(current + " " + total);
 		}
 		
-	    DefaultTableModel updateModel = GetModel();
+	    DefaultTableModel updateModel = GetModel(hc.HistoryDataList);
 	    tTable = makeTable(updateModel);
 	    pContentPane.getViewport().add(tTable,null);
 	    pContentPane.validate();
