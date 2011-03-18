@@ -30,7 +30,7 @@ public class DBUtil {
 		}
 		try {
 			conn = DriverManager.getConnection(URL, User, Pwd);
-			System.out.println("连接数据库成功");
+			//System.out.println("连接数据库成功");
 			return conn;
 		} catch (Exception e) {
 			System.out.println("数据连接失败！");
@@ -65,7 +65,7 @@ public class DBUtil {
 	       if(conn!=null){
 	           try{
 	               conn.close();
-	               System.out.println("关闭数据库成功！");
+	               //System.out.println("关闭数据库成功！");
 	           }catch(SQLException e){
 	               e.printStackTrace();
 	           }

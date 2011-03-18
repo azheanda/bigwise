@@ -3,8 +3,12 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import BigWise.UI.History.HistoryPanel;
+import BigWise.UI.News.NewsPanel;
+import BigWise.UI.Quote.QuotePanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 public   class   BigWise   {
 	JFrame   mainFrame;
@@ -12,9 +16,9 @@ public   class   BigWise   {
     HeaderPanel pHeaderPanel;
     JPanel cards;
     
-    QuoteBodyPanel pQuoteBodyPanel;
-    HisDataBodyPanel pHisDataBodyPanel;
-    NewsBodyPanel pNewsBodyPanel;
+    QuotePanel pQuoteBodyPanel;
+    HistoryPanel pHisDataBodyPanel;
+    NewsPanel pNewsBodyPanel;
     AnalyzerBodyPanel pAnalyzerBodyPanel;
     ForumBodyPanel pForumBodyPanel;
     
@@ -28,9 +32,9 @@ public   class   BigWise   {
 		
 		cards = new JPanel(new CardLayout());
 		thisContainer.add(cards,"Center");
-		pQuoteBodyPanel = new QuoteBodyPanel();
-		pHisDataBodyPanel = new HisDataBodyPanel();
-		pNewsBodyPanel = new NewsBodyPanel();
+		pQuoteBodyPanel = new QuotePanel();
+		pHisDataBodyPanel = new HistoryPanel();
+		pNewsBodyPanel = new NewsPanel();
 		pAnalyzerBodyPanel = new AnalyzerBodyPanel();
 		pForumBodyPanel = new ForumBodyPanel();
 		cards.add(pQuoteBodyPanel,"Quote");
@@ -58,9 +62,8 @@ public   class   BigWise   {
 		pHeaderPanel.bAnalyzer.addActionListener(cal);
 		pHeaderPanel.bForum.setActionCommand("Forum");
 		pHeaderPanel.bForum.addActionListener(cal);
-		mainFrame.setBounds(300, 100, 800, 400);
+		mainFrame.setBounds(300, 100, 1100, 800);
 		mainFrame.setVisible(true);
-		
     }
     
     

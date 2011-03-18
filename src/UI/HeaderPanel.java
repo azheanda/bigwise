@@ -17,9 +17,9 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 public class HeaderPanel extends JPanel implements ActionListener {
 	
-	JButton   bQuote   =   new   JButton( "行情");
-	JButton   bHisData   =   new   JButton( "历史数据");
-	JButton   bNews   =   new   JButton( "资讯");
+	JButton   bQuote   =   new   JButton( "实时");
+	JButton   bHisData   =   new   JButton( "历史");
+	JButton   bNews   =   new   JButton( "新闻");
 	JButton   bAnalyzer   =   new   JButton( "分析");
 	JButton   bForum   =   new   JButton( "论坛");
 	public HeaderPanel()
