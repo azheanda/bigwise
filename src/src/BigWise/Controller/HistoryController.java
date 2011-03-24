@@ -37,6 +37,7 @@ public class HistoryController extends Observable{
 		
 		Vector<StockHistoryData> hdl = hds.extractor(c.StockCode,"" , "");
 		
+		HistoryDataList.clear();
 		//System.out.println(hdl.size());
 		for( int i = 0 ; i < hdl.size() ; ++i)
 		{
@@ -87,9 +88,52 @@ public class HistoryController extends Observable{
 	}		
 	
 	
+	public double getMostMin()
+	{
+		double mostMin = 10000;
+		for(int i = 0 ;  i < HistoryDataList.size(); ++i)
+		{
+			StockHistoryData history = (StockHistoryData)HistoryDataList.elementAt(i);
+			double openPrice = Double.parseDouble(history.OpenPrice);
+			double minPrice = Double.parseDouble(history.MinPrice);
+			if(openPrice == 0)
+				continue;
+			else
+			{
+				if(minPrice < mostMin)
+					mostMin	= minPrice;
+			}
+			
+		}
+		
+		return mostMin;
+	}
+	
+	public double getMostMax()
+	{
+		double mostMax = 0;
+		for(int i = 0 ;  i < HistoryDataList.size(); ++i)
+		{
+			StockHistoryData history = (StockHistoryData)HistoryDataList.elementAt(i);
+			double openPrice = Double.parseDouble(history.OpenPrice);
+			double maxPrice = Double.parseDouble(history.MaxPrice);
+			if(openPrice == 0)
+				continue;
+			else
+			{
+				if(maxPrice > mostMax)
+					mostMax	= maxPrice;
+			}	
+		}
+		
+		return mostMax;
+	}
+	
 	public static void main(String args[])
 	{
 		HistoryController hc =HistoryController.getHistoryControllerInstance();
+		System.out.println(hc.getMostMin());
+		System.out.println(hc.getMostMax());
 	}
 	
 }

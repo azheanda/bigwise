@@ -73,12 +73,12 @@ public class HistoryDataBodyPanel extends JPanel implements ActionListener{
     
     public void init()
     {	
+    	hc.init();
 		DefaultTableModel model = GetModel(hc.HistoryDataList);  
 		tTable = makeTable(model);  
     }
 	public void refresh()
 	{
-		//System.out.println(hc.StockMarket + "" + hc.StockCode + hc.CodeIndex);
 		showLabel.setText(hc.c.StockCode);
 		init();
 		pContentPane.getViewport().add(tTable,null);
@@ -193,9 +193,9 @@ public class HistoryDataBodyPanel extends JPanel implements ActionListener{
 						
 							if((int)ClosePrice ==  0)
 								setForeground(Color.WHITE);//°×É«
-							else if(OpenPrice < ClosePrice)
+							else if(OpenPrice > ClosePrice)
 								setForeground(new Color(80,255,80));//ÂÌÉ«
-							else if(OpenPrice >= ClosePrice)
+							else if(OpenPrice <= ClosePrice)
 								setForeground(new Color(255,82,82));//ºìÉ«
 					    	
 								
