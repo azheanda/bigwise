@@ -1,17 +1,23 @@
 package BigWise.UI.History;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.*;
 
 import BigWise.Controller.HistoryController;
+import BigWise.UI.KLine.KLine;
+import BigWise.UI.RTLine.RTLine;
 
 public class HistoryPanel extends JPanel implements Observer{
 	
@@ -22,7 +28,7 @@ public class HistoryPanel extends JPanel implements Observer{
 	HistoryKGraphBodyPanel  pHistoryDailyKLinePanel;
 	HistoryKGraphBodyPanel  pHistoryWeeklyKLinePanel;
 	HistoryKGraphBodyPanel  pHistoryMonthlyKLinePanel;
-	
+	KLine pKLine;
 	public HistoryPanel()
 	{
 		hc = HistoryController.getHistoryControllerInstance();
@@ -34,16 +40,19 @@ public class HistoryPanel extends JPanel implements Observer{
 		pHistoryWeeklyKLinePanel = new HistoryKGraphBodyPanel("weekly");
 		pHistoryMonthlyKLinePanel = new HistoryKGraphBodyPanel("monthly");
 		pHistoryDataBodyPanel = new HistoryDataBodyPanel();
+		JPanel pKLinePanel = new JPanel();
+		pKLine = KLine.getKLine();
+		pKLinePanel.add(pKLine);
+
 		
 		
 		jtp.addTab("历史日K线图",pHistoryDailyKLinePanel );
 		jtp.addTab("历史周K线图",pHistoryWeeklyKLinePanel);
 		jtp.addTab("历史月K线图",pHistoryMonthlyKLinePanel);
 		jtp.addTab("历史数据", pHistoryDataBodyPanel);
-		
-		jtp.setSize(550,400);
+		jtp.addTab("历史日K", pKLinePanel);
+
 		add(jtp);
-		
 		hc.c.addObserver(this);
 		
 		setLayout(new GridLayout(1,1));

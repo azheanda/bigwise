@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 
 
 public   class   BigWise   {
-	
 	JFrame   mainFrame;
 	Container thisContainer; 
     HeaderPanel pHeaderPanel;
