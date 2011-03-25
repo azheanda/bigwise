@@ -20,8 +20,9 @@ public class HeaderPanel extends JPanel implements ActionListener {
 	JButton   bQuote   =   new   JButton( "实时");
 	JButton   bHisData   =   new   JButton( "历史");
 	JButton   bNews   =   new   JButton( "新闻");
+	JButton   bCapFlow   =   new   JButton( "资金流");
 	JButton   bAnalyzer   =   new   JButton( "分析");
-	JButton   bForum   =   new   JButton( "论坛");
+	
 	public HeaderPanel()
 	{
 		this.setLayout(new GridLayout(1,5));
@@ -31,8 +32,8 @@ public class HeaderPanel extends JPanel implements ActionListener {
 		this.add(bHisData);
 		bHisData.addActionListener(this);
 		this.add(bNews); 
+		this.add(bCapFlow); 
 		this.add(bAnalyzer); 
-		this.add(bForum); 
 		this.setSize(100,100);      
 	}
 	public void actionPerformed(ActionEvent e)

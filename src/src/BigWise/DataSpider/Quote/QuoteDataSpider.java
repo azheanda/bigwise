@@ -32,6 +32,7 @@ public class QuoteDataSpider {
 	
 	public static StockQuoteData GetQuoteDataByStockCode(StockInfo stockinfo) throws IOException
 	{
+		
 		String market = stockinfo.market;
 		String code = stockinfo.code;
 		String name = stockinfo.name;

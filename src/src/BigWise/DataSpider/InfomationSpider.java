@@ -8,30 +8,39 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
+import BigWise.DataDefine.StockNews;
 
 public class InfomationSpider {
 	/*
 	 * Back Up Data
 	 */
-	public static void GetInfomationData(String date,String url)
+	public static Vector<StockNews> GetInfomationData(String date,String url)
 	{
+		
+		Vector<StockNews> NewsList = new Vector<StockNews>();
+		
 		InfomationSpider test = new InfomationSpider();
 		try {
 			//test.extractor("http://hq.sinajs.cn/list=sh600000");
-			test.extractor("http://money.finance.sina.com.cn/corp/go.php/vMS_MarketHistory/stockid/600000.phtml");
+			NewsList = test.extractor("http://finance.sina.com.cn/stock/cpbd/index.html");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return NewsList;
 	}
 
 	/*
 	 * String GetDocumentAt(String url)
 	 * static method, return the string of the html page.
 	 */
-	private static String getDocumnetAt(String urlString) {
+	private static String getDocumnetAt(String urlString) 
+	{
 		StringBuffer html_text = new StringBuffer();
 		try {
 			// 创建指向股票网址的链接
@@ -52,69 +61,44 @@ public class InfomationSpider {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//System.out.println(html_text.toString());
 		return html_text.toString();
 	}
 
-	public void extractor(String urlString) throws IOException {
+	public Vector<StockNews> extractor(String urlString) throws IOException {
 		// 文件输出流
-		FileOutputStream fos = new FileOutputStream(".\\a.txt");
-		OutputStreamWriter ows = new OutputStreamWriter(fos);
-		try {
-			// 获得网页文本内容
-			String str = InfomationSpider.getDocumnetAt(urlString);
-			// 创建提取股票数据来源的正则表达式
-			Pattern gp_source = Pattern.compile("(?<=<th colspan=\"7\">|\"blue\">|</FONT>).*?(?=<|FONT|</th>)");
-			Matcher mc = gp_source.matcher(str);
-			String s1;
-			while (mc.find()) {
-				// 提取股票数据来源
-				s1 = String.valueOf(mc.group());
-				ows.write(s1);
-				System.out.printf("%s", mc.group());
-			}
-			System.out.println();
-			ows.write("\r\n");
+		Vector<StockNews> list = new Vector<StockNews>();
+		// 获得网页文本内容
+		String str = InfomationSpider.getDocumnetAt(urlString);
+		// 创建提取股票数据来源的正则表达式
+		Pattern gp_source = Pattern.compile("<div class=\"hg_title\">(.+?)(</div>) | (<div class=\"hg_content\">)(.+?)(</div>)");
+		Matcher mc = gp_source.matcher(str);
 
-			// 输出股票数据条目
-			String s2;
-			Pattern gp_item = Pattern
-					.compile("(?<=<strong>).*?(?=</strong>)");
-			Matcher n = gp_item.matcher(str);
-			while (n.find()) {
-				s2 = String.valueOf(n.group());
-				ows.write(s2 + "          ");
-				System.out.printf("%-42s", n.group());
-			}
-
-			// 提取股票数据详细情况
-			Pattern gp_data = Pattern.compile("((?<=date=)(\\w*?)).*?(?=('>))|((?<=center\">)(\\d{1,7}?)).*?(?=(</div>))");
-			Matcher m = gp_data.matcher(str);
-			String s3;
-			int i = 0;
-			while (m.find()) {
-				if (i == 0)
-					System.out.println();
-				i++;
-				s3 = String.valueOf(m.group());
-				ows.write(s3 + "          ");
-
-				System.out.printf("%-20s", m.group());
-				if (i % 7 == 0) {
-					System.out.println();
-					ows.write("\r\n");
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (PatternSyntaxException e) {
-			System.out.println("Regular expression syntax error");
-		} catch (IllegalStateException e) {
-			System.out.println("Do not find the pattern");
-		} finally {
-			if (ows != null) {
-				ows.close();
-				fos.close();
-			}
+		while (mc.find()) 
+		{
+			// 提取股票数据来源
+			String title = String.valueOf(mc.group(1));
+			mc.find();
+			String content = String.valueOf(mc.group());
+			mc.find();
+			String judge = String.valueOf(mc.group());
+			
+			//System.out.println(title + content + judge);
+			
+			StockNews news = new StockNews();
+			news.NewsTitle = title;
+			news.NewsContent = content;
+			news.NewsJudge = judge;
+			
+			list.add(news);
 		}
+				
+		return list;
+	}
+	
+	public static void main(String args[])
+	{
+		Vector<StockNews> list = InfomationSpider.GetInfomationData("", "");
+		System.out.println(list.size());
 	}
 }
