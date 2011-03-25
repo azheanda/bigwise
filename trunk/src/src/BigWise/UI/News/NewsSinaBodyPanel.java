@@ -28,54 +28,47 @@ import java.lang.Math;
 public class NewsSinaBodyPanel extends JPanel implements ActionListener{
 
 
+	private static final String InformationSpider = null;
 	Vector<StockNews> NewsList = new Vector<StockNews>();
+	
+	String NewsType;
     int total;
     int current;
    
-    JPanel pTopPanel;
-    JLabel titleLabel;
-    JLabel timeLabel;
+    final int NewsPerPage = 5;
     
-    JScrollPane pContentPane;
-    JTextArea showArea;
+    JPanel pContentPanel;
+    JLabel contentLabel;    
+    JLabel judgeLabel;
+    
     
     JPanel pDownPanel;
     JButton bNext = new JButton("下一条");
     JButton bPrevious = new JButton("上一条");
-	public NewsSinaBodyPanel()
+	
+    public NewsSinaBodyPanel()
 	{
-		for (int i = 1; i <= 10; ++i)
-		{
-			StockNews news = new StockNews();
-			news.NewsDate = "2010-1-2";
-			news.NewsTime = "18:00:2";
-			news.NewsTitle = "这是第"+ i +"条新闻";
-			news.NewsContent = "第" + i + "此逗你玩公司是中盐吉兰泰盐化集团旗下的一家集制盐、盐化工、盐湖生物制药与养殖以及矿产资源开发为一体的大型";
-			NewsList.add(news);
-		}
+		NewsList = InfomationSpider.GetInfomationData("", "");
+		System.out.println(NewsList.size());
 		
 		total = NewsList.size() - 1;
 		current = 0;
 		
 		setLayout(new BorderLayout());
-		pTopPanel = new JPanel(new GridLayout(2,1));
-		// 标题
-		titleLabel = new JLabel();
-		pTopPanel.add(titleLabel);
-		//时间
-		timeLabel = new JLabel();
 		
-		pTopPanel.add(timeLabel);
-		add(pTopPanel,"North");
 		
 		//内容
-		showArea = new JTextArea();
-		showArea.setSize(100,100);
-		pContentPane = new JScrollPane(showArea);
-		add(pContentPane,"Center");
+		pContentPanel = new JPanel();
+		pContentPanel.setLayout(new GridLayout(NewsPerPage,1));
+		for(int i = 0 ; i < NewsPerPage ; ++i)
+		{
+			contentLabel = new JLabel();
+			contentLabel.setSize(500,500);
+			pContentPanel.add(contentLabel);
+			showNews(i);
+		}
 		
-		showNews(current);
-		
+		add(pContentPanel,"Center");
 		//翻页
 		 pDownPanel = new JPanel();
 	    pDownPanel.add(bPrevious);
@@ -132,9 +125,7 @@ public class NewsSinaBodyPanel extends JPanel implements ActionListener{
 	
 	 public void showNews(int index)
 	 {
-		 titleLabel.setText(NewsList.elementAt(current).NewsTitle);
-		 timeLabel.setText(NewsList.elementAt(current).NewsDate +" " +  NewsList.elementAt(current).NewsTime);
-		 showArea.setText(NewsList.elementAt(current).NewsContent);
+		 contentLabel.setText("<html>" +NewsList.elementAt(current).NewsTitle +NewsList.elementAt(current).NewsContent +NewsList.elementAt(current).NewsJudge + "</html>");
 	 }
 	 public String getMarket(String code)
 	 {
@@ -152,7 +143,7 @@ public class NewsSinaBodyPanel extends JPanel implements ActionListener{
 	 public static void main(String args[]) {
 		    JFrame frame = new JFrame("QuoteRTBodyPanel");
 		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		    News163BodyPanel tmp = new News163BodyPanel();
+		    NewsSinaBodyPanel tmp = new NewsSinaBodyPanel();
 		    frame.add(tmp);
 		    frame.setSize(1000,720);
 		    frame.setVisible(true);

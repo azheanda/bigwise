@@ -34,6 +34,7 @@ public class QuoteController extends Observable{
 	public final double ROWPERPAGE = 19;
 	public int total = 0;
 	public int current = 0;
+	public Vector<StockQuoteData> quote;
 	public StockQuoteData[] QuoteData;									//   数据 
 	Object columnNames[] = { "ID", "代码","名称", "最新价","最高价","最低价","今日开盘价","昨日收盘价","总手(万)","金额(亿)"};
 	

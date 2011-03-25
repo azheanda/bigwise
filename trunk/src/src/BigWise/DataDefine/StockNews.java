@@ -5,9 +5,10 @@ public class StockNews {
 	public String NewsTime;
 	public String NewsTitle;
 	public String NewsContent;
+	public String NewsJudge;
 	
 	public String toString()
 	{
-		return NewsDate + NewsTime + NewsTitle + " | " + NewsContent;
+		return NewsDate + NewsTime + NewsTitle + " | " + NewsContent + "Judge";
 	}
 }

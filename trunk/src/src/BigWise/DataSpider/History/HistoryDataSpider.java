@@ -27,6 +27,7 @@ public class HistoryDataSpider {
  		int StockNumber = StockList.size();
  		
  		// 行情数据
+ 		
 		StockHistoryData[] HistoryData = new StockHistoryData[StockNumber];
  		
  		//System.out.println(StockNumber);
@@ -152,20 +153,7 @@ public class HistoryDataSpider {
 
 					//ows.write("\r\n");
 			}
-			//System.out.println(i);
-			//} catch (IOException e) {
-			//e.printStackTrace();
-		//} 
-		//catch (PatternSyntaxException e) {
-		//	System.out.println("Regular expression syntax error");
-		//} catch (IllegalStateException e) {
-		//	System.out.println("Do not find the pattern");
-		//} finally {
-		//	if (ows != null) {
-		//		ows.close();
-		//		fos.close();
-		//	}
-		//}
+		
 		return	HistoryDataList;
 	}
 

@@ -3,6 +3,8 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import BigWise.UI.Analyzer.AnalyzerBodyPanel;
+import BigWise.UI.CapFlow.CapFlowBodyPanel;
 import BigWise.UI.History.HistoryPanel;
 import BigWise.UI.News.NewsPanel;
 import BigWise.UI.Quote.QuotePanel;
@@ -20,7 +22,7 @@ public   class   BigWise   {
     HistoryPanel pHisDataBodyPanel;
     NewsPanel pNewsBodyPanel;
     AnalyzerBodyPanel pAnalyzerBodyPanel;
-    ForumBodyPanel pForumBodyPanel;
+    CapFlowBodyPanel pCapFlowBodyPanel;
     
     public void init()
     {
@@ -36,12 +38,12 @@ public   class   BigWise   {
 		pHisDataBodyPanel = new HistoryPanel();
 		pNewsBodyPanel = new NewsPanel();
 		pAnalyzerBodyPanel = new AnalyzerBodyPanel();
-		pForumBodyPanel = new ForumBodyPanel();
+		pCapFlowBodyPanel = new CapFlowBodyPanel();
 		cards.add(pQuoteBodyPanel,"Quote");
 		cards.add(pHisDataBodyPanel,"HisData");
 		cards.add(pNewsBodyPanel,"News");
 		cards.add(pAnalyzerBodyPanel,"Analyzer");
-		cards.add(pForumBodyPanel,"Forum");
+		cards.add(pCapFlowBodyPanel,"CapFlow");
 		
 		class ControlActionListenter implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
@@ -60,8 +62,8 @@ public   class   BigWise   {
 		pHeaderPanel.bNews.addActionListener(cal);
 		pHeaderPanel.bAnalyzer.setActionCommand("Analyzer");
 		pHeaderPanel.bAnalyzer.addActionListener(cal);
-		pHeaderPanel.bForum.setActionCommand("Forum");
-		pHeaderPanel.bForum.addActionListener(cal);
+		pHeaderPanel.bCapFlow.setActionCommand("CapFlow");
+		pHeaderPanel.bCapFlow.addActionListener(cal);
 		mainFrame.setBounds(300, 100, 1100, 800);
 		mainFrame.setVisible(true);
     }

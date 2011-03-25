@@ -28,31 +28,27 @@ import java.lang.Math;
 public class News163BodyPanel extends JPanel implements ActionListener{
 
 
+	private static final String InformationSpider = null;
 	Vector<StockNews> NewsList = new Vector<StockNews>();
     int total;
     int current;
    
     JPanel pTopPanel;
-    JLabel titleLabel;
-    JLabel timeLabel;
+    JTextArea titleLabel;
     
-    JScrollPane pContentPane;
-    JTextArea showArea;
+    JPanel pContentPanel;
+    JTextArea contentLabel;    
+    JTextArea judgeLabel;
+    
     
     JPanel pDownPanel;
     JButton bNext = new JButton("下一条");
     JButton bPrevious = new JButton("上一条");
-	public News163BodyPanel()
+	
+    public News163BodyPanel()
 	{
-		for (int i = 1; i <= 10; ++i)
-		{
-			StockNews news = new StockNews();
-			news.NewsDate = "2010-1-2";
-			news.NewsTime = "18:00:02";
-			news.NewsTitle = "这是第"+ i +"条新闻";
-			news.NewsContent = "第" + i + "此逗你玩公司是中盐吉兰泰盐化集团旗下的一家集制盐、盐化工、盐湖生物制药与养殖以及矿产资源开发为一体的大型";
-			NewsList.add(news);
-		}
+		NewsList = InfomationSpider.GetInfomationData("", "");
+		System.out.println(NewsList.size());
 		
 		total = NewsList.size() - 1;
 		current = 0;
@@ -60,25 +56,23 @@ public class News163BodyPanel extends JPanel implements ActionListener{
 		setLayout(new BorderLayout());
 		pTopPanel = new JPanel(new GridLayout(2,1));
 		// 标题
-		titleLabel = new JLabel();
-		titleLabel.setAlignmentX(CENTER_ALIGNMENT);
+		titleLabel = new JTextArea();
 		pTopPanel.add(titleLabel);
-		//时间
-		timeLabel = new JLabel();
-		timeLabel.setAlignmentX(RIGHT_ALIGNMENT);
-		pTopPanel.add(timeLabel);
 		add(pTopPanel,"North");
 		
 		//内容
-		showArea = new JTextArea();
-		showArea.setBackground(new Color(238,238,238));
-		showArea.setEditable(false);
-		showArea.setSize(100,100);
-		pContentPane = new JScrollPane(showArea);
-		add(pContentPane,"Center");
-		
+		pContentPanel = new JPanel();
+		pContentPanel.setLayout(new GridLayout(2,1));
+		contentLabel = new JTextArea();
+		judgeLabel = new JTextArea();	
+		contentLabel.setLineWrap(true);
+		judgeLabel.setLineWrap(true);
+		contentLabel.setEditable(true);
+		judgeLabel.setEditable(true);
+		pContentPanel.add(contentLabel);
+		pContentPanel.add(judgeLabel);
 		showNews(current);
-		
+		add(pContentPanel,"Center");
 		//翻页
 		 pDownPanel = new JPanel();
 	    pDownPanel.add(bPrevious);
@@ -136,8 +130,8 @@ public class News163BodyPanel extends JPanel implements ActionListener{
 	 public void showNews(int index)
 	 {
 		 titleLabel.setText(NewsList.elementAt(current).NewsTitle);
-		 timeLabel.setText(NewsList.elementAt(current).NewsDate +" " +  NewsList.elementAt(current).NewsTime);
-		 showArea.setText(NewsList.elementAt(current).NewsContent);
+		 contentLabel.setText(NewsList.elementAt(current).NewsContent);
+		 judgeLabel.setText(NewsList.elementAt(current).NewsJudge);
 	 }
 	 public String getMarket(String code)
 	 {
