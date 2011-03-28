@@ -17,9 +17,11 @@ import javax.swing.table.TableRowSorter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import BigWise.Controller.NewsController;
 import BigWise.DataSpider.*;
 import BigWise.DataSpider.Quote.QuoteDataSpider;
-import BigWise.DataDefine.*;
+import BigWise.Model.*;
 
 import java.text.DecimalFormat;
 import java.lang.Math;
@@ -27,50 +29,36 @@ import java.lang.Math;
 
 public class NewsSinaBodyPanel extends JPanel implements ActionListener{
 
-
-	private static final String InformationSpider = null;
+	public NewsController nc;
 	Vector<StockNews> NewsList = new Vector<StockNews>();
 	
 	String NewsType;
-    int total;
-    int current;
    
-    final int NewsPerPage = 5;
-    
     JPanel pContentPanel;
-    JLabel contentLabel;    
-    JLabel judgeLabel;
+    JLabel[] contentLabel;    
     
     
     JPanel pDownPanel;
-    JButton bNext = new JButton("下一条");
-    JButton bPrevious = new JButton("上一条");
+    JButton bNext = new JButton("下一页");
+    JButton bPrevious = new JButton("上一页");
 	
     public NewsSinaBodyPanel()
 	{
-		NewsList = InfomationSpider.GetInfomationData("", "");
-		System.out.println(NewsList.size());
-		
-		total = NewsList.size() - 1;
-		current = 0;
+    	nc = NewsController.getNewsControllerInstance();
+    	
+		NewsList = nc.NewsList;
+		//System.out.println(NewsList.size());
 		
 		setLayout(new BorderLayout());
 		
-		
 		//内容
 		pContentPanel = new JPanel();
-		pContentPanel.setLayout(new GridLayout(NewsPerPage,1));
-		for(int i = 0 ; i < NewsPerPage ; ++i)
-		{
-			contentLabel = new JLabel();
-			contentLabel.setSize(500,500);
-			pContentPanel.add(contentLabel);
-			showNews(i);
-		}
+		contentLabel = new JLabel[(int)nc.NewsPerPage];
+		showNews();
 		
-		add(pContentPanel,"Center");
+		
 		//翻页
-		 pDownPanel = new JPanel();
+		pDownPanel = new JPanel();
 	    pDownPanel.add(bPrevious);
 	    bPrevious.addActionListener(this);
 	    pDownPanel.add(bNext);
@@ -88,45 +76,44 @@ public class NewsSinaBodyPanel extends JPanel implements ActionListener{
 		
 		 if(e.getSource() == bNext)
 			{
-				current += 1;
-				if(current > total)
-				{
-					current = total;
-					bNext.setEnabled(false);
-					bPrevious.setEnabled(true);
-					return;
-				}
-				else
-				{
-					bNext.setEnabled(true);
-				}
-				
-				//System.out.println(current + " " + total);
+				nc.pageNext();
 			}
 			else if(e.getSource() == bPrevious)
 			{
-				current -= 1;
-				if(current <= 0)
-				{
-					current = 1;
-					bPrevious.setEnabled(false);
-					bNext.setEnabled(true);
-					return;
-				}
-				else
-				{
-					bPrevious.setEnabled(true);
-				}
-			}
-
-		 	showNews(current);
-			//System.out.println(text);
+				nc.pagePrevious();
+			}	
+		 pContentPanel.removeAll();
+		 showNews();
 	 }
 	
-	 public void showNews(int index)
-	 {
-		 contentLabel.setText("<html>" +NewsList.elementAt(current).NewsTitle +NewsList.elementAt(current).NewsContent +NewsList.elementAt(current).NewsJudge + "</html>");
+	 public void showNews()
+	 { 
+		 pContentPanel.setLayout(new GridLayout((int)nc.NewsPerPage,1));
+		 
+		 int begin =(int)( (nc.current - 1) * nc.NewsPerPage);
+		 int end =(int)(  nc.current * nc.NewsPerPage);
+		 if( nc.current == nc.total)
+		 {
+			 end = NewsList.size();
+		 }
+		 
+		 int ID = 0;
+		 for(int i = begin; i < end; ++i)
+		 {
+			 ID = i % ((int)nc.NewsPerPage);
+			 //System.out.println(ID);
+			 StockNews news = NewsList.elementAt(i);
+			 contentLabel[ID] = new JLabel();
+			 contentLabel[ID].setText("<html><h4>" +news.NewsTitle+ "</h4> <div style='" +
+			 		"border:1px solid black;background-color:white;color:gray;'>" + news.NewsContent + news.NewsJudge + "</div></html>");
+			 pContentPanel.add(contentLabel[ID]);
+		 }
+		  
+		 pContentPanel.validate();
+		 this.add(pContentPanel,"Center");
 	 }
+	 
+	 
 	 public String getMarket(String code)
 	 {
 		 String prefix = code.substring(0, 1);
@@ -141,7 +128,7 @@ public class NewsSinaBodyPanel extends JPanel implements ActionListener{
 	 
 	 
 	 public static void main(String args[]) {
-		    JFrame frame = new JFrame("QuoteRTBodyPanel");
+		    JFrame frame = new JFrame("Sina News");
 		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    NewsSinaBodyPanel tmp = new NewsSinaBodyPanel();
 		    frame.add(tmp);

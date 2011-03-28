@@ -5,9 +5,9 @@ import java.util.Vector;
 import java.util.regex.*;
 import java.util.logging.Logger;
 
-import BigWise.DataDefine.StockHistoryData;
-import BigWise.DataDefine.StockInfo;
-import BigWise.DataDefine.StockQuoteData;
+import BigWise.Model.StockHistoryData;
+import BigWise.Model.StockInfo;
+import BigWise.Model.StockQuoteData;
 
 /*
  * This Class Used to Get Day HisData.
@@ -120,9 +120,6 @@ public class HistoryDataSpider {
 			// 提取股票数据详细情况
 			Pattern gp_data = Pattern.compile("((?<=date=)(\\w*?)).*?(?=('>))|((?<=center\">)(\\d{1,7}?)).*?(?=(</div>))");
 			Matcher m = gp_data.matcher(str);
-			String tmp = "";
-			
-			int i = 0;
 			
 			while (m.find())
 			{

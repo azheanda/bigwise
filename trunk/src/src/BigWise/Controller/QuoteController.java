@@ -2,10 +2,10 @@
  * 实时数据的控制
  */
 package BigWise.Controller;
-import BigWise.DataDefine.StockInfo;
-import BigWise.DataDefine.StockQuoteData;
 import BigWise.DataSpider.History.HistoryDataSpider;
 import BigWise.DataSpider.Quote.QuoteDataSpider;
+import BigWise.Model.StockInfo;
+import BigWise.Model.StockQuoteData;
 
 import java.io.IOException;
 import java.text.DecimalFormat;

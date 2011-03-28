@@ -1,7 +1,8 @@
 package BigWise.DataSpider.History;
 import java.net.*;
-import BigWise.DataDefine.StockInfo;
-import BigWise.DataDefine.StockQuoteData;
+
+import BigWise.Model.StockInfo;
+import BigWise.Model.StockQuoteData;
 
 import java.io.*;
 import java.util.Vector;

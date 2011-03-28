@@ -43,7 +43,7 @@ public class QuotePanel extends JPanel implements Observer{
 	
 	public void update(Observable obj,Object arg)
 	{
-		System.out.println("update");
+		//System.out.println("update");
 		pQuoteDataBodyPanel.refresh();
 		pQuoteRTGraphBodyPanel.refresh();
 		pQuoteKGraphPanel.refresh();
