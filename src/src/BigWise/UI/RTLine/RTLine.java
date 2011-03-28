@@ -8,8 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import BigWise.Controller.QuoteController;
-import BigWise.DataDefine.StockQuoteData;
 import BigWise.DataSpider.*;
+import BigWise.Model.StockQuoteData;
 
 public class RTLine extends Canvas {
 	public QuoteController qc;

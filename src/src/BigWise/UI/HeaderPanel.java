@@ -31,8 +31,8 @@ public class HeaderPanel extends JPanel implements ActionListener {
 		bQuote.addActionListener(this);
 		this.add(bHisData);
 		bHisData.addActionListener(this);
-		this.add(bNews); 
 		this.add(bCapFlow); 
+		this.add(bNews); 
 		this.add(bAnalyzer); 
 		this.setSize(100,100);      
 	}

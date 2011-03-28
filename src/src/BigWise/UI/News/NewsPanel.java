@@ -15,7 +15,7 @@ public class NewsPanel extends JPanel{
 	{
 
 		jtp.addTab("新浪新闻", new NewsSinaBodyPanel());
-		jtp.addTab("网易新闻", new News163BodyPanel());
+		jtp.addTab("交易提示", new JYTSSinaBodyPanel());
 		add(jtp);
 		setLayout(new GridLayout(1,1));
 		setSize(1000,600);

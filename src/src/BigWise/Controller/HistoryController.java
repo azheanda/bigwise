@@ -4,9 +4,10 @@
 package BigWise.Controller;
 import javax.swing.*;
 
-import BigWise.DataDefine.StockHistoryData;
-import BigWise.DataDefine.StockInfo;
 import BigWise.DataSpider.History.HistoryDataSpider;
+import BigWise.Model.StockHistoryData;
+import BigWise.Model.StockInfo;
+
 import java.util.Observable;
 import java.util.Vector;
 public class HistoryController extends Observable{

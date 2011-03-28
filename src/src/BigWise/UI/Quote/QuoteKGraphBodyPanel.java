@@ -21,7 +21,7 @@ import java.awt.event.ActionListener;
 import BigWise.Controller.QuoteController;
 import BigWise.DataSpider.*;
 import BigWise.DataSpider.Quote.QuoteDataSpider;
-import BigWise.DataDefine.*;
+import BigWise.Model.*;
 
 import java.text.DecimalFormat;
 import java.lang.Math;

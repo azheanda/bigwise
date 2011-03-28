@@ -24,7 +24,7 @@ import BigWise.Controller.HistoryController;
 import BigWise.DataSpider.*;
 import BigWise.DataSpider.History.HistoryDataSpider;
 import BigWise.DataSpider.Quote.QuoteDataSpider;
-import BigWise.DataDefine.*;
+import BigWise.Model.*;
 
 import java.text.DecimalFormat;
 import java.lang.Math;

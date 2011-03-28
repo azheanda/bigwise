@@ -10,9 +10,9 @@ import java.util.Vector;
 
 import BigWise.Controller.HistoryController;
 import BigWise.Controller.QuoteController;
-import BigWise.DataDefine.StockHistoryData;
-import BigWise.DataDefine.StockQuoteData;
 import BigWise.DataSpider.*;
+import BigWise.Model.StockHistoryData;
+import BigWise.Model.StockQuoteData;
 import BigWise.UI.Quote.QuoteDataBodyPanel;
 import BigWise.UI.RTLine.RTLine;
 

@@ -42,8 +42,9 @@ public   class   BigWise   {
 		cards.add(pQuoteBodyPanel,"Quote");
 		cards.add(pHisDataBodyPanel,"HisData");
 		cards.add(pNewsBodyPanel,"News");
-		cards.add(pAnalyzerBodyPanel,"Analyzer");
 		cards.add(pCapFlowBodyPanel,"CapFlow");
+		cards.add(pAnalyzerBodyPanel,"Analyzer");
+		
 		
 		class ControlActionListenter implements ActionListener {
 	        public void actionPerformed(ActionEvent e) {
