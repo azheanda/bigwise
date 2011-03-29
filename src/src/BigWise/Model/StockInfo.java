@@ -26,9 +26,15 @@ public class StockInfo {
 		Vector<StockInfo> StockList = getStockListByKeyword(type,keyword);
 		return StockList.size();
 	}
+	
 	// type包括市场，行业和地区
 	public static Vector<StockInfo> getStockListByKeyword(String type, String keyword)
 	{
+		if(keyword == "sh")
+			keyword = "上海";
+		else if(keyword == "sz")
+			keyword = "深圳";
+		
 		Vector<StockInfo> StockList = new Vector<StockInfo>();
 		try
 		{
@@ -36,6 +42,9 @@ public class StockInfo {
 			
 			Statement stmt = conn.createStatement();
 			ResultSet stockdata;
+			
+			//String sql = "select * from stockinfo where "+ type + "='"+ keyword + "';";
+			//System.out.println(sql);
 			//System.out.println(market);
 			if(keyword != "*")
 				stockdata = stmt.executeQuery("select * from stockinfo where "+ type + "='"+ keyword + "';");
@@ -126,6 +135,7 @@ public class StockInfo {
 		}
 		return StockNameList;	
 	}
+	
 	// 获取所有类型的 子类  类型包括：市场，板块，省份
 	public static Vector<String> getTypeList(String type)
 	{
@@ -157,17 +167,21 @@ public class StockInfo {
 	
 	
 	
+	
 	public static void main(String args[])
 	{
 
-		Vector<String> NameList = StockInfo.getStockNameList();
-
-		Vector<String> CodeList = StockInfo.getStockCodeList();
-		for(int i = 0; i < NameList.size(); ++i)
-		{
-			System.out.print(NameList.elementAt(i));
-			System.out.println(CodeList.elementAt(i));
-		}
+//		Vector<String> NameList = StockInfo.getStockNameList();
+//
+//		Vector<String> CodeList = StockInfo.getStockCodeList();
+//		for(int i = 0; i < NameList.size(); ++i)
+//		{
+//			System.out.print(NameList.elementAt(i));
+//			System.out.println(CodeList.elementAt(i));
+//		}
+		
+		System.out.println(StockInfo.getStockListByKeyword("industry", "银行").size());
+		
 	}
 
 }

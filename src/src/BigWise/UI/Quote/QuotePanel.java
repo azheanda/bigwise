@@ -11,6 +11,7 @@ import java.util.Observer;
 import javax.swing.*;
 
 import BigWise.Controller.QuoteController;
+import BigWise.UI.RTLine.RTLine;
 
 public class QuotePanel extends JPanel implements Observer{
 	
@@ -19,21 +20,24 @@ public class QuotePanel extends JPanel implements Observer{
 	QuoteDataBodyPanel pQuoteDataBodyPanel;
 	QuoteRTGraphBodyPanel	pQuoteRTGraphBodyPanel;
 	QuoteKGraphBodyPanel pQuoteKGraphPanel;
-	
+	RTLine pRTPanel;
 	public QuotePanel()
 	{
 		qc = QuoteController.getQuoteControllerInstance();
 		pQuoteDataBodyPanel = new QuoteDataBodyPanel();
 		pQuoteRTGraphBodyPanel = new QuoteRTGraphBodyPanel();
 		pQuoteKGraphPanel	= new QuoteKGraphBodyPanel();
+		JPanel pRTLinePanel = new JPanel();
+		pRTPanel = new RTLine();
+		pRTLinePanel.add(pRTPanel);
 		
-		
-		jtp.addTab("实时数据", pQuoteDataBodyPanel );
+		jtp.addTab("分时图",	pRTLinePanel);
 		jtp.addTab("分时图",	pQuoteRTGraphBodyPanel);
 		jtp.addTab("实时K线图", pQuoteKGraphPanel);
+		jtp.addTab("实时数据", pQuoteDataBodyPanel );
 		add(jtp);
 		
-		qc.c.addObserver(this);
+		qc.controller.addObserver(this);
 		
 		setLayout(new GridLayout(1,1));
 		setSize(1000,600);
