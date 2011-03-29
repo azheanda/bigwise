@@ -29,7 +29,7 @@ public class QuoteRTGraphBodyPanel extends JPanel implements ActionListener {
 		add(showLabel);
 		setVisible(true);
 		String text = "<html><img src='http://image.sinajs.cn/newchart/min/n/"
-				+ qc.c.StockMarket + qc.c.StockCode + ".gif'/><html>";
+				+ qc.controller.StockMarket + qc.controller.StockCode + ".gif'/><html>";
 		// System.out.println(text);
 		showLabel.setText(text);
 		pContentPane.add(showLabel, "Center");
@@ -49,16 +49,16 @@ public class QuoteRTGraphBodyPanel extends JPanel implements ActionListener {
 
 	public void refresh() {
 		String text = "<html><img src='http://image.sinajs.cn/newchart/min/n/"
-				+ qc.c.StockMarket + qc.c.StockCode + ".gif'/><html>";
+				+ qc.controller.StockMarket + qc.controller.StockCode + ".gif'/><html>";
 		showLabel.setText(text);
 	}
 
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == bNext) {
-			qc.c.CodeIndexNext();
+			qc.controller.CodeIndexNext();
 		} else if (e.getSource() == bPrevious) {
-			qc.c.CodeIndexprevious();
+			qc.controller.CodeIndexprevious();
 		}
 		refresh();
 	}

@@ -52,7 +52,7 @@ public class QuoteKGraphBodyPanel extends JPanel implements ActionListener{
 		showLabel = new JLabel();
 		add(showLabel);
 		setVisible(true);
-		String text = "<html><img src='http://image.sinajs.cn/newchart/daily/n/"+qc.c.StockMarket+qc.c.StockCode+".gif'/><html>";
+		String text = "<html><img src='http://image.sinajs.cn/newchart/daily/n/"+qc.controller.StockMarket+qc.controller.StockCode+".gif'/><html>";
 		//System.out.println(text);
 		showLabel.setText(text);
 	    pContentPane.add(showLabel,"Center");
@@ -72,20 +72,20 @@ public class QuoteKGraphBodyPanel extends JPanel implements ActionListener{
 	
 	public void refresh()
 	{
-		String text = "<html><img src='http://image.sinajs.cn/newchart/daily/n/"+qc.c.StockMarket+qc.c.StockCode+".gif'/><html>";
+		String text = "<html><img src='http://image.sinajs.cn/newchart/daily/n/"+qc.controller.StockMarket+qc.controller.StockCode+".gif'/><html>";
 		showLabel.setText(text);
 	}
 	 public void actionPerformed(ActionEvent e) {
 		
 		 if(e.getSource() == bNext)
 			{
-				qc.c.CodeIndexNext();
+				qc.controller.CodeIndexNext();
 				
 				//System.out.println(current + " " + total);
 			}
 			else if(e.getSource() == bPrevious)
 			{
-				qc.c.CodeIndexprevious();
+				qc.controller.CodeIndexprevious();
 			}
 		 	
 		 refresh();

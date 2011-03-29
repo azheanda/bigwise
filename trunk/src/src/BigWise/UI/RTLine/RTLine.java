@@ -6,7 +6,9 @@ import javax.swing.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
+import BigWise.Controller.Controller;
 import BigWise.Controller.QuoteController;
 import BigWise.DataSpider.*;
 import BigWise.Model.StockQuoteData;
@@ -18,27 +20,36 @@ public class RTLine extends Canvas {
 	double CurrentPriceBefore = 0;
 	int xAxisBefore = 0;
 
-	int number = 0;
-
-	RTLine() {
+	int xLength = 1000;
+	int yLength = 600;
+	int number = 48;		// 每小时12根，共48根
+	public Controller controller;
+	
+	
+	public RTLine() {
+		
 		qc = QuoteController.getQuoteControllerInstance();
-		setSize(1000, 600);
+		controller = Controller.getControllerInstance();
+		
+		setSize(xLength, yLength);
 	}
 
 	public void paint(Graphics g) {
 		xAxis = 0;
+		
+		// 画坐标系
 		drawCordinate(g);
 		
 
-		System.out.println(qc.total);
-		StockQuoteData[] quote = qc.QuoteData;
-		for(int i = 0; i <quote.length ; ++i)
-			drawRTLine(quote[i], g);
-		
+		// 画实时数据
+		Vector<StockQuoteData> quoteList = qc.quoteList;
+		for(int i = 0; i < quoteList.size() ; ++i)
+			drawRTLine(quoteList.elementAt(i), g);	
 
 	}
 
 	public void drawCordinate(Graphics g) {
+		
 		g.setColor(Color.black);
 		Dimension d = getSize();
 
@@ -54,7 +65,7 @@ public class RTLine extends Canvas {
 
 	public void drawRTLine(StockQuoteData quote, Graphics g)
 	{
-		System.out.println(quote.CurrentPrice);
+			//System.out.println(quote.CurrentPrice);
 		
 			xAxis += 5;
 			CurrentPrice = quote.CurrentPrice * 2 ;
@@ -68,7 +79,10 @@ public class RTLine extends Canvas {
 	public static void main(String args[]) {
 		JFrame frame = new JFrame("test");
 		Container c = frame.getContentPane();
-		c.add(new RTLine());
+		
+		JPanel p = new JPanel();
+		p.add(new RTLine());
+		c.add(p);
 		c.setLayout(new FlowLayout());
 		frame.setSize(1100, 700);
 		frame.setVisible(true);

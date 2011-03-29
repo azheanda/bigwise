@@ -18,6 +18,7 @@ import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import BigWise.Controller.Controller;
 import BigWise.Controller.QuoteController;
 import BigWise.DataSpider.*;
 import BigWise.DataSpider.Quote.QuoteDataSpider;
@@ -27,20 +28,11 @@ import java.text.DecimalFormat;
 import java.lang.Math;
 
 
-public class QuoteDataBodyPanel extends JPanel implements ActionListener,ListSelectionListener{
+public class QuoteDataBodyPanel extends JPanel implements ActionListener{
    
 	public QuoteController qc;
 	
 
-	JPanel pLeftPanel;
-	JButton   bALL   =   new   JButton( "所有股票列表 ");
-	JButton   bSH   =   new   JButton( "沪A ");
-    JButton   bSZ   =   new   JButton( "深A ");
-    JButton   bHYBK   =   new   JButton( "行业列表 "); 
-    BasicArrowButton bHYNav = new  BasicArrowButton(BasicArrowButton.SOUTH);
-    JButton   bDQBK   =   new   JButton( "地区列表"); 
-    BasicArrowButton bDQNav = new  BasicArrowButton(BasicArrowButton.SOUTH);
-    
 	JScrollPane pContentPane;
 	JTable tTable;
     Object columnNames[] = { "ID", "代码","名称", "最新价","最高价","最低价","今日开盘价","昨日收盘价","总手(万)","金额(亿)"};
@@ -49,35 +41,16 @@ public class QuoteDataBodyPanel extends JPanel implements ActionListener,ListSel
 	JPanel pDownPanel;
     JButton bNext = new JButton("下一页");
     JButton bPrevious = new JButton("上一页");
-    
+
     
 	public QuoteDataBodyPanel()
 	{
 		qc = QuoteController.getQuoteControllerInstance();
-		// 左边栏
-		pLeftPanel = new JPanel();		
-		pLeftPanel.setLayout(new FlowLayout());
-		pLeftPanel.add(bALL);
-		bALL.addActionListener(this);
-		pLeftPanel.add(bSH);
-		bSH.addActionListener(this);
-		pLeftPanel.add(bSZ);
-		bSZ.addActionListener(this);
-		pLeftPanel.add(bHYBK);
-		bHYBK.addActionListener(this);
-		pLeftPanel.add(bHYNav);
-		pLeftPanel.add(bDQBK); 
-		pLeftPanel.add(bDQNav);
-		bDQBK.addActionListener(this);
-		pLeftPanel.setSize(1000,50);
-		pLeftPanel.setAlignmentY(LEFT_ALIGNMENT);
-		this.add(pLeftPanel);
-		
 			
 		init();
 	    
 	    pContentPane = new JScrollPane(tTable);
-	    pContentPane.setPreferredSize(new   Dimension(1000,600)); 
+	    pContentPane.setPreferredSize(new   Dimension(1000,30*(int)(qc.ROWPERPAGE + 1))); 
 	    this.add(pContentPane);
 	    
 	    pDownPanel = new JPanel();
@@ -85,82 +58,42 @@ public class QuoteDataBodyPanel extends JPanel implements ActionListener,ListSel
 	    bPrevious.addActionListener(this);
 	    pDownPanel.add(bNext);
 	    bNext.addActionListener(this);
-	    pDownPanel.setSize(1000,100);
+	    pDownPanel.setPreferredSize(new Dimension(1000,50));
 	    this.add(pDownPanel);
 		
 	}
 	
 	public void init()
 	{
+		
 		DefaultTableModel model = qc.GetModel();
 	    tTable = makeTable(model);
 	}
 	
 	public void refresh()
 	{
+		qc.GetData(qc.controller.StockCode);
 		init();
 		pContentPane.getViewport().add(tTable,null);
 		pContentPane.validate();
 	}
 	
 	 public void actionPerformed(ActionEvent e) {
-		String type = "";
-		String keyword = "";
-		if(e.getSource() == bALL)
-		{
-			type = "market";
-			keyword = "*";
-			qc.GetData(type, keyword);
-		}
-		else if(e.getSource() == bSH)
-		{
-			type = "market";
-			keyword = "sh";
-			qc.GetData(type, keyword);
-		}
-		else if(e.getSource() == bSZ)
-		{
-			type = "market";
-			keyword = "sz";
-			qc.GetData(type, keyword);
-		}
-		else if(e.getSource() == bHYBK)
-		{
-			type = "industry";
-			Vector<String> IndustryList = StockInfo.getTypeList(type);
-			JList list = new JList(IndustryList);
-			this.add(list,"West");
-			keyword = "*";
-			qc.GetData(type, keyword);
-		}
-		else if(e.getSource() == bDQBK)
-		{
-			type = "province";
-			Vector<String> ProvinceList = StockInfo.getTypeList(type);
-			JList list = new JList(ProvinceList);
-			list.addListSelectionListener(this);
-			this.add(list,"West");
-			keyword = "*";
-			qc.GetData(type, keyword);
-		}
-		
-		else if(e.getSource() == bNext)
+	
+		if(e.getSource() == bNext)
 		{
 			qc.pageNext();
-			//System.out.println(current + " " + total);
 		}
 		else if(e.getSource() == bPrevious)
 		{
 			qc.pagePrevious();
-			//System.out.println(current + " " + total);
 		}
-		refresh();
+		init();
+		pContentPane.getViewport().add(tTable,null);
+		pContentPane.validate();
 	   
 	 }
-	 public void valueChanged(ListSelectionEvent e)
-	 {
-		 //System.out.println("hello");
-	 }
+
 	 public JTable makeTable(DefaultTableModel model)
 	 {
 		 JTable table = new JTable(model)
