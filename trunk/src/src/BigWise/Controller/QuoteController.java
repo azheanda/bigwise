@@ -5,6 +5,7 @@ package BigWise.Controller;
 
 import BigWise.DataSpider.History.HistoryDataSpider;
 import BigWise.DataSpider.Quote.QuoteDataSpider;
+import BigWise.Model.StockHistoryData;
 import BigWise.Model.StockInfo;
 import BigWise.Model.StockQuoteData;
 import BigWise.Utility.DBUtil;
@@ -42,43 +43,43 @@ public class QuoteController extends Observable {
 	public int current = 0;
 	public Vector<StockQuoteData> quoteList = new Vector<StockQuoteData>();
 
-	Object columnNames[] = { "ID", "代码", "名称","最新价", "最高价", "最低价", "今日开盘价",
+	Object columnNames[] = { "ID", "代码", "名称", "最新价", "最高价", "最低价", "今日开盘价",
 			"昨日收盘价", "总手(万)", "金额(亿)" };
 
 	private QuoteController() {
 		controller = Controller.getControllerInstance();
-
 		init();
 	}
 
 	// 获取数据
-	public void init()
-	{
+	public void init() {
+		
 		GetData(controller.StockCode);
 	}
 
 	// 获取数据
 	public void GetData(String code) {
-		
+
 		quoteList.clear();
-		
+
 		try {
 			Connection conn = DBUtil.getDbConn();
 			Statement stmt = conn.createStatement();
 
 			ResultSet result;
 
-			result = stmt.executeQuery(" select * from quotedata where code = '"+ code + "';");
+			result = stmt
+					.executeQuery(" select * from quotedata where code = '"
+							+ code + "';");
 
-			
 			while (result.next()) {
-				
+
 				int ID = result.getInt("ID");
 				String name = result.getString("name");
 				String date = result.getString("date");
 				String time = result.getString("time");
 				double OpenPrice = result.getDouble("OpenPrice");
-				
+
 				double ClosePrice = result.getDouble("ClosePrice");
 				double CurrentPrice = result.getDouble("CurrentPrice");
 				double MaxPrice = result.getDouble("MaxPrice");
@@ -86,11 +87,11 @@ public class QuoteController extends Observable {
 				double TradeAccout = result.getDouble("TradeAccout");
 				double TotalTrade = result.getDouble("TotalTrade");
 				int color = result.getInt("Color");
-				
+
 				StockQuoteData quote = new StockQuoteData(ID, code, name, date,
 						time, OpenPrice, ClosePrice, CurrentPrice, MaxPrice,
-						MinPrice, TradeAccout, TotalTrade, color);
-				//System.out.println(quote.toString() );
+						MinPrice, TradeAccout, TotalTrade, color,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);
+				// System.out.println(quote.toString() );
 				quoteList.add(quote);
 			}
 			result.close();
@@ -102,7 +103,7 @@ public class QuoteController extends Observable {
 		}
 
 		// 算出总数，求出第一页
-		//System.out.println(quoteList.size());
+		// System.out.println(quoteList.size());
 		total = (int) Math.ceil(quoteList.size() / ROWPERPAGE);
 		// System.out.println(total);
 		current = 1;
@@ -165,6 +166,47 @@ public class QuoteController extends Observable {
 			return;
 		} else
 			current--;
+	}
+
+	// 
+	public double getMostMin() {
+		double mostMin = 10000;
+		for(int i = 0; i < quoteList.size(); ++ i)
+		{
+			StockQuoteData quote = (StockQuoteData) quoteList.elementAt(i);
+			double openPrice = quote.CurrentPrice;
+			if(openPrice < mostMin)
+				mostMin = openPrice;
+		}
+		
+
+		return mostMin;
+	}
+
+	// 
+	public double getMostMax() {
+		double mostMax = 0;
+		for(int i = 0; i < quoteList.size(); ++ i)
+		{
+			StockQuoteData quote = (StockQuoteData) quoteList.elementAt(i);
+			double openPrice = quote.CurrentPrice;
+			if(openPrice > mostMax)
+				mostMax = openPrice;
+		}
+		return mostMax;
+	}
+	
+	// 最大成交量
+	public double getMostTrade() {
+		double mostMaxTrade = 0;
+		for(int i = 0; i < quoteList.size(); ++ i)
+		{
+			StockQuoteData quote = (StockQuoteData) quoteList.elementAt(i);
+			double total = quote.TradeAccount;
+			if(total > mostMaxTrade)
+				mostMaxTrade = total;
+		}
+		return mostMaxTrade;
 	}
 
 	public String getMarket(String code) {

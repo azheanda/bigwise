@@ -58,7 +58,7 @@ public class NavPanel extends JPanel {
 	             if(begin < 0)
 	            	 return;
 	             String code = name.substring(begin+1,length-1);
-	             System.out.println(code);
+	             //System.out.println(code);
 	             controller.StockCode = code;
 	             controller.StockMarket = Utility.getMarket(code);
 	             controller.CodeUpdate();

@@ -103,7 +103,10 @@ public class KLine extends Canvas {
 			
 		index = index + xStep;
 	}
-	
+	public void refresh()
+	{
+		repaint();
+	}
 	public static KLine getKLine()
 	{
 		return new KLine();
