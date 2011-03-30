@@ -28,7 +28,7 @@ public class QuotePanel extends JPanel implements Observer{
 		pQuoteRTGraphBodyPanel = new QuoteRTGraphBodyPanel();
 		pQuoteKGraphPanel	= new QuoteKGraphBodyPanel();
 		JPanel pRTLinePanel = new JPanel();
-		pRTPanel = new RTLine();
+		pRTPanel = RTLine.getRTLine();
 		pRTLinePanel.add(pRTPanel);
 		
 		jtp.addTab("∑÷ ±Õº",	pRTLinePanel);
@@ -48,6 +48,7 @@ public class QuotePanel extends JPanel implements Observer{
 	public void update(Observable obj,Object arg)
 	{
 		//System.out.println("update");
+		pRTPanel.refresh();
 		pQuoteDataBodyPanel.refresh();
 		pQuoteRTGraphBodyPanel.refresh();
 		pQuoteKGraphPanel.refresh();

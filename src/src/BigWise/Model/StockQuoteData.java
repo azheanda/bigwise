@@ -49,12 +49,37 @@ public class StockQuoteData {
 	public double LowPriceToday; // 今日最低价格
 	public double TradeAccount; // 今日交易量
 	public double TotalTrade; // 今日交易金额
+	public double Buy1;
+	public double Buy2;
+	public double Buy3;
+	public double Buy4;
+	public double Buy5;
+	public double Buy1Price;
+	public double Buy2Price;
+	public double Buy3Price;
+	public double Buy4Price;
+	public double Buy5Price;
+	public double Sell1;
+	public double Sell2;
+	public double Sell3;
+	public double Sell4;
+	public double Sell5;
+	public double Sell1Price;
+	public double Sell2Price;
+	public double Sell3Price;
+	public double Sell4Price;
+	public double Sell5Price;
+
 	public int StockColor; // 0是白色，1是红色，2是绿色
 
 	public StockQuoteData(int id, String code, String name, String date,
 			String time, double openprice, double closeprice,
 			double currentPrice, double maxprice, double lowPrice,
-			double tradeaccout, double totaltrade, int color) {
+			double tradeaccout, double totaltrade, int color, double b1,
+			double b2, double b3, double b4, double b5, double bp1, double bp2,
+			double bp3, double bp4, double bp5, double s1, double s2,
+			double s3, double s4, double s5, double sp1, double sp2, double sp3,
+			double sp4, double sp5) {
 		ID = id;
 		StockCode = code;
 		StockName = name;
@@ -65,16 +90,37 @@ public class StockQuoteData {
 		CurrentPrice = currentPrice;
 		HighPriceToday = maxprice;
 		LowPriceToday = lowPrice;
+
+		Buy1 = b1;
+		Buy2 = b2;
+		Buy3 = b3;
+		Buy4 = b4;
+		Buy5 = b5;
+		Buy1Price = bp1;
+		Buy2Price = bp2;
+		Buy3Price = bp3;
+		Buy4Price = bp4;
+		Buy5Price = bp5;
 		
-		TradeAccount =tradeaccout;
+		Sell1 = s1;
+		Sell2 = s2;
+		Sell3 = s3;
+		Sell4 = s4;
+		Sell5 = s5;
+		Sell1Price = sp1;
+		Sell2Price = sp2;
+		Sell3Price = sp3;
+		Sell4Price = sp4;
+		Sell5Price = sp5;
+		TradeAccount = tradeaccout;
 		TotalTrade = totaltrade;
 		StockColor = color;
 	}
 
-	public StockQuoteData()
-	{
-		
+	public StockQuoteData() {
+
 	}
+
 	public String toString() {
 		return StockCode + " | " + StockName + " | " + StockDate + " | "
 				+ StockTime + " | " + OpenPriceToday + " | "

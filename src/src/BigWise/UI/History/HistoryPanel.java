@@ -63,7 +63,8 @@ public class HistoryPanel extends JPanel implements Observer{
 
 	public void update(Observable obj,Object arg)
 	{
-		System.out.println("update");
+		
+		pKLine.refresh();
 		pHistoryDataBodyPanel.refresh();
 		pHistoryDailyKLinePanel.refresh();
 		pHistoryWeeklyKLinePanel.refresh();
