@@ -42,7 +42,7 @@ public class QuoteController extends Observable {
 	public int total = 0;
 	public int current = 0;
 	public Vector<StockQuoteData> quoteList = new Vector<StockQuoteData>();
-
+	public Vector<Double> tradeNumberList = new Vector<Double>();
 	Object columnNames[] = { "ID", "代码", "名称", "最新价", "最高价", "最低价", "今日开盘价",
 			"昨日收盘价", "总手(万)", "金额(亿)" };
 
@@ -53,8 +53,9 @@ public class QuoteController extends Observable {
 
 	// 获取数据
 	public void init() {
-		
+
 		GetData(controller.StockCode);
+		tradeNumberList = getTradeList();
 	}
 
 	// 获取数据
@@ -79,7 +80,6 @@ public class QuoteController extends Observable {
 				String date = result.getString("date");
 				String time = result.getString("time");
 				double OpenPrice = result.getDouble("OpenPrice");
-
 				double ClosePrice = result.getDouble("ClosePrice");
 				double CurrentPrice = result.getDouble("CurrentPrice");
 				double MaxPrice = result.getDouble("MaxPrice");
@@ -90,7 +90,9 @@ public class QuoteController extends Observable {
 
 				StockQuoteData quote = new StockQuoteData(ID, code, name, date,
 						time, OpenPrice, ClosePrice, CurrentPrice, MaxPrice,
-						MinPrice, TradeAccout, TotalTrade, color,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);
+						MinPrice, TradeAccout, TotalTrade, color, 0.0, 0.0,
+						0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+						0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 				// System.out.println(quote.toString() );
 				quoteList.add(quote);
 			}
@@ -168,42 +170,37 @@ public class QuoteController extends Observable {
 			current--;
 	}
 
-	// 
+	//
 	public double getMostMin() {
 		double mostMin = 10000;
-		for(int i = 0; i < quoteList.size(); ++ i)
-		{
+		for (int i = 0; i < quoteList.size(); ++i) {
 			StockQuoteData quote = (StockQuoteData) quoteList.elementAt(i);
 			double openPrice = quote.CurrentPrice;
-			if(openPrice < mostMin)
+			if (openPrice < mostMin)
 				mostMin = openPrice;
 		}
-		
 
 		return mostMin;
 	}
 
-	// 
+	//
 	public double getMostMax() {
 		double mostMax = 0;
-		for(int i = 0; i < quoteList.size(); ++ i)
-		{
+		for (int i = 0; i < quoteList.size(); ++i) {
 			StockQuoteData quote = (StockQuoteData) quoteList.elementAt(i);
 			double openPrice = quote.CurrentPrice;
-			if(openPrice > mostMax)
+			if (openPrice > mostMax)
 				mostMax = openPrice;
 		}
 		return mostMax;
 	}
-	
+
 	// 最大成交量
 	public double getMostTrade() {
 		double mostMaxTrade = 0;
-		for(int i = 0; i < quoteList.size(); ++ i)
-		{
-			StockQuoteData quote = (StockQuoteData) quoteList.elementAt(i);
-			double total = quote.TradeAccount;
-			if(total > mostMaxTrade)
+		for (int i = 0; i < tradeNumberList.size(); ++i) {
+			double total = tradeNumberList.elementAt(i);// 总成交手数
+			if (total > mostMaxTrade)
 				mostMaxTrade = total;
 		}
 		return mostMaxTrade;
@@ -220,8 +217,24 @@ public class QuoteController extends Observable {
 		return "sh";
 	}
 
+	public Vector<Double> getTradeList() {
+		Vector<Double> tradeNumberList = new Vector<Double>();
+		double before = quoteList.elementAt(0).TotalTrade / 100;
+		tradeNumberList.add(before);
+		for (int i = 1; i < quoteList.size(); ++i) {
+			StockQuoteData quote = (StockQuoteData) quoteList.elementAt(i);
+			double current = quote.TotalTrade / 100 - before;
+			// System.out.println(current);
+			tradeNumberList.add(current);
+			before += current;
+		}
+		return tradeNumberList;
+
+	}
+
 	public static void main(String args[]) {
 		QuoteController qc = QuoteController.getQuoteControllerInstance();
+		System.out.println(qc.getMostTrade());
 	}
 
 }

@@ -50,7 +50,7 @@ public class HistoryDataBodyPanel extends JPanel implements ActionListener{
 	{
     	hc = HistoryController.getHistoryControllerInstance();
 
-		showLabel = new JLabel(hc.c.StockCode);
+		showLabel = new JLabel(hc.controller.StockCode);
 		pLeftPanel = new JPanel();
 		pLeftPanel.add(showLabel);
 		this.add(pLeftPanel);
@@ -73,13 +73,13 @@ public class HistoryDataBodyPanel extends JPanel implements ActionListener{
     
     public void init()
     {	
-    	hc.init();
+    	hc.init(hc.controller.StockCode);
 		DefaultTableModel model = GetModel(hc.HistoryDataList);  
 		tTable = makeTable(model);  
     }
 	public void refresh()
 	{
-		showLabel.setText(hc.c.StockCode);
+		showLabel.setText(hc.controller.StockCode);
 		init();
 		pContentPane.getViewport().add(tTable,null);
 	    pContentPane.validate();

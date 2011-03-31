@@ -33,8 +33,8 @@ public class HistoryPanel extends JPanel implements Observer{
 	{
 		hc = HistoryController.getHistoryControllerInstance();
 		
-		hc.c.CodeIndexNext();
-		System.out.println(hc.c.CodeIndex +"|" + hc.c.CodeLength + hc.c.StockCode);
+		hc.controller.CodeIndexNext();
+		System.out.println(hc.controller.CodeIndex +"|" + hc.controller.CodeLength + hc.controller.StockCode);
 		
 		pHistoryDailyKLinePanel = new HistoryKGraphBodyPanel("daily");
 		pHistoryWeeklyKLinePanel = new HistoryKGraphBodyPanel("weekly");
@@ -53,7 +53,7 @@ public class HistoryPanel extends JPanel implements Observer{
 		jtp.addTab("¿˙ ∑»’K", pKLinePanel);
 
 		add(jtp);
-		hc.c.addObserver(this);
+		hc.controller.addObserver(this);
 		
 		setLayout(new GridLayout(1,1));
 		setSize(1000,600);

@@ -1,4 +1,4 @@
-package BigWise.DataDefine;
+package BigWise.Model;
 
 public class StockNews {
 	public String NewsDate;
