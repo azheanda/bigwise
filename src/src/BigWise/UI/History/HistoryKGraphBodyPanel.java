@@ -75,7 +75,7 @@ public class HistoryKGraphBodyPanel extends JPanel implements ActionListener{
 	public void refresh()
 	{
 		//System.out.println(hc.StockMarket + "" + hc.StockCode + hc.CodeIndex);
-		String text = "<html><img src='http://image.sinajs.cn/newchart/"+KLineType+"/n/"+hc.c.StockMarket+hc.c.StockCode+".gif'/><html>";
+		String text = "<html><img src='http://image.sinajs.cn/newchart/"+KLineType+"/n/"+hc.controller.StockMarket+hc.controller.StockCode+".gif'/><html>";
 		//System.out.println(text);
 		showLabel.setText(text); 
 	}
@@ -84,11 +84,11 @@ public class HistoryKGraphBodyPanel extends JPanel implements ActionListener{
 		 // 会通知上层次面板更新
 		 if(e.getSource() == bNext)
 		 {
-			 hc.c.CodeIndexNext();				
+			 hc.controller.CodeIndexNext();				
 		 }
 		 else if(e.getSource() == bPrevious)
 		 {
-			 hc.c.CodeIndexprevious();
+			 hc.controller.CodeIndexprevious();
 		 }
 		
 		 refresh();

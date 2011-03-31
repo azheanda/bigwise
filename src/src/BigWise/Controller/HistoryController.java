@@ -7,7 +7,13 @@ import javax.swing.*;
 import BigWise.DataSpider.History.HistoryDataSpider;
 import BigWise.Model.StockHistoryData;
 import BigWise.Model.StockInfo;
+import BigWise.Model.StockQuoteData;
+import BigWise.Utility.DBUtil;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Observable;
 import java.util.Vector;
 public class HistoryController extends Observable{
@@ -19,7 +25,7 @@ public class HistoryController extends Observable{
 	public int total = 0;
 	public int current = 0;
 	
-	public	Controller c;
+	public	Controller controller;
 	// 单子模式
 	public static HistoryController getHistoryControllerInstance()
 	{
@@ -27,28 +33,51 @@ public class HistoryController extends Observable{
 	}
 	private HistoryController()
 	{
-		c = Controller.getControllerInstance();
-		init();	
+		controller = Controller.getControllerInstance();
+		init(controller.StockCode);	
 	}
 	
 	// 获取数据
-	public void init()
+	public void init(String code)
 	{
-		HistoryDataSpider hds = new HistoryDataSpider();
-		
-		Vector<StockHistoryData> hdl = hds.extractor(c.StockCode,"" , "");
-		
 		HistoryDataList.clear();
-		//System.out.println(hdl.size());
-		for( int i = 0 ; i < hdl.size() ; ++i)
-		{
-			HistoryDataList.add((StockHistoryData)hdl.elementAt(i));
+
+		System.out.println(code);
+		try {
+			Connection conn = DBUtil.getDbConn();
+			Statement stmt = conn.createStatement();
+
+			ResultSet result;
+
+			result = stmt
+					.executeQuery(" select * from HistoryData where code = '"
+							+ code + "' order by StockDate  asc;");
+			while (result.next()) {
+
+				String date = result.getString("StockDate");
+				double OpenPrice = result.getDouble("OpenPrice");
+				double ClosePrice = result.getDouble("ClosePrice");
+				double MaxPrice = result.getDouble("MaxPrice");
+				double MinPrice = result.getDouble("MinPrice");
+				double TradeAccout = result.getDouble("TradeAccount");
+				double TotalTrade = result.getDouble("totalTrade");
+
+				StockHistoryData history = new StockHistoryData(code, date,
+						OpenPrice, ClosePrice, MaxPrice,
+						MinPrice, TradeAccout,TotalTrade);
+				// System.out.println(quote.toString() );
+				HistoryDataList.add(history);
+			}
+			result.close();
+			stmt.close();
+			DBUtil.closeConnection(conn);
+
+		} catch (SQLException e) {
+			System.out.println("SQL Failed");
 		}
-		//System.out.println(HistoryDataList.size());
-		//System.out.println(ROWPERPAGE);
 		// 算出总数，求出第一页
 		total = (int)Math.ceil(HistoryDataList.size()/ROWPERPAGE);
-		//System.out.println(total);
+		
 		current = 1;	
 	}
 	
@@ -95,8 +124,8 @@ public class HistoryController extends Observable{
 		for(int i = 0 ;  i < HistoryDataList.size(); ++i)
 		{
 			StockHistoryData history = (StockHistoryData)HistoryDataList.elementAt(i);
-			double openPrice = Double.parseDouble(history.OpenPrice);
-			double minPrice = Double.parseDouble(history.MinPrice);
+			double openPrice = history.OpenPrice;
+			double minPrice = history.MinPrice;
 			if(openPrice == 0)
 				continue;
 			else
@@ -116,8 +145,8 @@ public class HistoryController extends Observable{
 		for(int i = 0 ;  i < HistoryDataList.size(); ++i)
 		{
 			StockHistoryData history = (StockHistoryData)HistoryDataList.elementAt(i);
-			double openPrice = Double.parseDouble(history.OpenPrice);
-			double maxPrice = Double.parseDouble(history.MaxPrice);
+			double openPrice = history.OpenPrice;
+			double maxPrice = history.MaxPrice;
 			if(openPrice == 0)
 				continue;
 			else

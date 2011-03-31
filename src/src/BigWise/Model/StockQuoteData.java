@@ -48,7 +48,7 @@ public class StockQuoteData {
 	public double HighPriceToday; // 今日最高价格
 	public double LowPriceToday; // 今日最低价格
 	public double TradeAccount; // 今日交易量
-	public double TotalTrade; // 今日交易金额
+	public double TotalTrade; 	// 今日交易金额
 	public double Buy1;
 	public double Buy2;
 	public double Buy3;

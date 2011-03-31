@@ -46,10 +46,20 @@ public class Utility {
 			flag =true;
 		else if(hour == 14)
 			flag = true;
-		System.out.println(flag);
+		
 		return flag;
 	}
 	
+	public static int getDay()
+	{
+		int day = 0;
+		Calendar now   = Calendar.getInstance();
+		int    date = now.get( Calendar.DAY_OF_MONTH );
+		int    month = now.get( Calendar.MONTH ) + 1;
+		day = month*100 + date;
+		return day;
+	}
+			
 	public static void main(String[] args){
 		System.out.println(Utility.getMarket("600000"));
 		Utility.IsMarketTime();

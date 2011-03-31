@@ -28,7 +28,7 @@ public class RTLine extends Canvas {
 	double MostMax;
 	double MostMin;
 	double OpenPrice;
-	double MaxTrade;	// 最大成交量
+	double MaxTrade; // 最大成交量
 
 	double xStep = 0;
 	double yStep = 0;
@@ -60,8 +60,9 @@ public class RTLine extends Canvas {
 		MostMax = qc.getMostMax();
 		MostMin = qc.getMostMin();
 		OpenPrice = quoteList.elementAt(0).OpenPriceToday;
+
 		MaxTrade = qc.getMostTrade();
-		
+
 		// System.out.println(MostMax + ":" + MostMin);
 		yStep = (yLength - 2 * downSize) / (MostMax - MostMin);
 
@@ -70,19 +71,20 @@ public class RTLine extends Canvas {
 		// 上一次的价格和坐标
 		xAxisBefore = xAxis;
 		PriceBefore = quoteList.elementAt(0).CurrentPrice;
-		AverBefore = quoteList.elementAt(0).TradeAccount/quoteList.elementAt(0).TotalTrade;
-		
-		
+		AverBefore = quoteList.elementAt(0).TradeAccount
+				/ quoteList.elementAt(0).TotalTrade;
+
 		// 画坐标系
 		drawCordinate(g);
 		drawTradeCordinate(g);
+
 		for (int i = 0; i < quoteList.size(); ++i) {
 			StockQuoteData quote = quoteList.elementAt(i);
-			
+
 			drawRTLine(quote, g);
-			drawTradeLine(quote,g);
+			drawTradeLine(qc.tradeNumberList.elementAt(i), g);
 			drawAverageLine(quote, g);
-			
+
 		}
 
 	}
@@ -118,13 +120,13 @@ public class RTLine extends Canvas {
 		g.drawRect(leftSize, yMax + downSize - 1, xMax, 1);
 		g.setFont(new Font("Romas", 12, 9));
 		g.setColor(Color.red);
-		g.drawString("9:30", leftSize, yMax +  downSize + 10);
-		g.drawString("10:30", leftSize + (int) xStep * 12, yMax + downSize+ 10);
+		g.drawString("9:30", leftSize, yMax + downSize + 10);
+		g.drawString("10:30", leftSize + (int) xStep * 12, yMax + downSize + 10);
 		g.drawString("11:30", leftSize + (int) xStep * 24, yMax + downSize + 10);
 		g.drawString("14:00", leftSize + (int) xStep * 36, yMax + downSize + 10);
 		g.drawString("15:00", leftSize + (int) xStep * 48, yMax + downSize + 10);
 	}
-	
+
 	// 成交量坐标轴
 	public void drawTradeCordinate(Graphics g) {
 
@@ -137,21 +139,19 @@ public class RTLine extends Canvas {
 
 		// System.out.println(xMax + "|" + yMax);
 		// 纵轴
-		g.drawRect(leftSize, yMax + downSize + 10, 1, downSize - 20 );
-		for(int i = 0; i <= 4; ++i)
-		{
+		g.drawRect(leftSize, yMax + downSize + 10, 1, downSize - 20);
+		for (int i = 0; i <= 4; ++i) {
 			double value = MaxTrade / 4;
 			double step = (downSize - 20) / 4;
-			double price =  value * i;
-			
+			double price = value * i;
+
 			g.drawString(df.format(price), 0,
-					(int) (yMax + 2* downSize - 10 - i * step ));
+					(int) (yMax + 2 * downSize - 10 - i * step));
 		}
-		
 
 		// 不能从上面的开头开始画，横轴
 		g.setColor(Color.black);
-		g.drawRect(leftSize, yMax + 2*downSize - 10, xMax, 1);
+		g.drawRect(leftSize, yMax + 2 * downSize - 10, xMax, 1);
 		g.setFont(new Font("Romas", 12, 9));
 		g.setColor(Color.red);
 		g.drawString("9:30", leftSize, yMax + 2 * downSize);
@@ -173,48 +173,45 @@ public class RTLine extends Canvas {
 		g.drawLine(xAxisBefore, (int) (yLength - PriceBefore - downSize),
 				xAxis, (int) (yLength - Current - downSize));
 
-		
 		PriceBefore = Current;
-		
 
 	}
-	
-	public void drawTradeLine(StockQuoteData quote, Graphics g) {
+
+	public void drawTradeLine(double var, Graphics g) {
 		Dimension d = getSize();
 
 		// 绘制坐标系
 		int xMax = d.width - 2 * leftSize;
 		int yMax = d.height - 2 * downSize;
-		double account = quote.TradeAccount;
-		double step =  MaxTrade /(downSize - 20);
-		
-		double value = account / step;
-		System.out.println(value);
+		double step = MaxTrade / (downSize - 20);
+
+		double value = var / step;
+		// System.out.println(value);
 		g.setColor(Color.pink);
-		g.fillRect(xAxis, (int)(yMax + downSize + 10 + downSize - 20 - value ), (int)xStep - 4, (int)value);
+		g.fillRect(xAxis, (int) (yMax + downSize + 10 + downSize - 20 - value),
+				(int) xStep - 4, (int) value);
 
 	}
-	
+
 	public void drawAverageLine(StockQuoteData quote, Graphics g) {
 
-		double aver = quote.TradeAccount/quote.TotalTrade;
-		
+		double aver = quote.TradeAccount / quote.TotalTrade;
+
 		double Average = (aver - MostMin) * yStep;
 		g.setColor(Color.blue);
 		g.setFont(new Font("Romas", 10, 7));
-//		g.drawString(df.format(aver), xAxis,
-//				(int) (yLength - Average - downSize + 3));
+		// g.drawString(df.format(aver), xAxis,
+		// (int) (yLength - Average - downSize + 3));
 
 		g.setColor(Color.yellow);
-		g.drawLine(xAxisBefore, (int) (yLength - AverBefore - downSize),
-				xAxis, (int) (yLength - Average - downSize));
+		g.drawLine(xAxisBefore, (int) (yLength - AverBefore - downSize), xAxis,
+				(int) (yLength - Average - downSize));
 
 		xAxisBefore = xAxis;
 		AverBefore = Average;
 		xAxis += xStep;
 
 	}
-
 
 	// 刷新
 	public void refresh() {

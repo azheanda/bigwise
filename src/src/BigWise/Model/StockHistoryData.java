@@ -8,13 +8,27 @@ import java.util.Date;
 public class StockHistoryData {
 	public String StockCode;				// 股票代码
 	public String StockDate;				// 日期
-	public String OpenPrice;				// 开盘价
-	public String ClosePrice;				// 收盘价
-	public String MaxPrice;					// 最高价格
-	public String MinPrice;					// 平均价格
-	public String TradeAccount;				// 交易量
-	public String TotalTrade;				// 交易金额
+	public double OpenPrice;				// 开盘价
+	public double ClosePrice;				// 收盘价
+	public double MaxPrice;					// 最高价格
+	public double MinPrice;					// 最低价格
+	public double TradeAccount;				// 交易量
+	public double TotalTrade;				// 交易金额
 	
+	public StockHistoryData()
+	{}
+	
+	public StockHistoryData(String code, String date, double open, double close, double max, double min, double number, double amount)
+	{
+		StockCode = code;
+		StockDate = date;
+		OpenPrice = open;
+		ClosePrice = close;
+		MaxPrice = max;
+		MinPrice = min;
+		TradeAccount = number;
+		TotalTrade = amount;
+	}
 	public String toString()
 	{
 		return StockCode + "|" + StockDate + "|" + OpenPrice + "|" + ClosePrice + "|" + MaxPrice + "|" + MinPrice + "|"
