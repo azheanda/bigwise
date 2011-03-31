@@ -55,8 +55,19 @@ public class QuoteDataSpider extends Thread {
 						+ quote.OpenPriceToday + "," + quote.ClosePriceYestoday
 						+ "," + quote.CurrentPrice + "," + quote.HighPriceToday
 						+ ", " + quote.LowPriceToday + "," + quote.TradeAccount
-						+ "," + quote.TotalTrade + "," + quote.StockColor
-						+ ");";
+						+ "," + quote.TotalTrade + ","
+						+ quote.Buy1 + "," + quote.Buy1Price + ","
+						+ quote.Buy2 + "," + quote.Buy2Price + ","
+						+ quote.Buy3 + "," + quote.Buy3Price + ","
+						+ quote.Buy4 + "," + quote.Buy4Price + ","
+						+ quote.Buy5 + "," + quote.Buy5Price + ","
+						+ quote.Sell1 + "," + quote.Sell1Price + ","
+						+ quote.Sell2 + "," + quote.Sell2Price + ","
+						+ quote.Sell3 + "," + quote.Sell3Price + ","
+						+ quote.Sell4 + "," + quote.Sell4Price + ","
+						+ quote.Sell5 + "," + quote.Sell5Price + ","
+						+ quote.StockColor + ");";
+				System.out.println(sql);
 				stmt.execute(sql);
 			}
 
@@ -169,7 +180,7 @@ public class QuoteDataSpider extends Thread {
 					// 每隔5分钟抓取一次实时数据
 					System.out.println("catch RT data");
 					QuoteDataSpider.GetQuoteDataByKeyword("market", "*");
-					Thread.sleep(300000);
+					Thread.sleep(180000);
 				} else {
 					// 不是市场时间，每隔半小时检测一次
 					Thread.sleep(1800000);
