@@ -180,10 +180,11 @@ public class QuoteDataSpider extends Thread {
 					// 每隔5分钟抓取一次实时数据
 					System.out.println("catch RT data");
 					QuoteDataSpider.GetQuoteDataByKeyword("market", "*");
-					Thread.sleep(180000);
+					Thread.sleep(300000);
 				} else {
 					// 不是市场时间，每隔半小时检测一次
-					Thread.sleep(1800000);
+					System.out.println("Not Market Time");
+					Thread.sleep(120000);
 				}
 			} catch (IOException ex) {
 				ex.printStackTrace();

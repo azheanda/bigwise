@@ -25,9 +25,10 @@ public   class   BigWise   {
     AnalyzerBodyPanel pAnalyzerBodyPanel;
     CapFlowBodyPanel pCapFlowBodyPanel;
     
+    
     NavPanel navPanel;
     
-    JPanel panel;
+    StatePanel indexPanel;
     public void init()
     {
     	mainFrame = new JFrame("BigWise");
@@ -42,8 +43,8 @@ public   class   BigWise   {
 		thisContainer.add(navPanel,"West");
 		
 		// 底部大盘纵观指数栏
-		panel = new JPanel();
-		thisContainer.add(panel,"South");
+		indexPanel = new StatePanel();
+		thisContainer.add(indexPanel,"South");
 		
 
 		cards = new JPanel(new CardLayout());
@@ -86,6 +87,17 @@ public   class   BigWise   {
     
     
     public   static   void   main(String[]   args)   { 
+    	
+    	try {
+    		//UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+			//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+		}
+		catch ( Exception e ) {
+			System.out.println ("无法将界面设置为windows风格");
+		}
     	BigWise   testPanel   =   new   BigWise(); 
     	testPanel.init();
     } 

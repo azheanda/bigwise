@@ -10,11 +10,16 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import BigWise.UI.RTLine.RTLine;
 public class HeaderPanel extends JPanel implements ActionListener {
 	
 	JButton   bQuote   =   new   JButton( "实时");
@@ -22,10 +27,18 @@ public class HeaderPanel extends JPanel implements ActionListener {
 	JButton   bNews   =   new   JButton( "新闻");
 	JButton   bCapFlow   =   new   JButton( "资金流");
 	JButton   bAnalyzer   =   new   JButton( "分析");
-	
+	Border roundedBorder = new LineBorder(Color.BLACK, 2, true);
 	public HeaderPanel()
 	{
-		this.setLayout(new GridLayout(1,5));
+		this.setLayout(new GridLayout(1,5,10,10));
+		
+		
+		bQuote.setBorder(roundedBorder);
+		bHisData.setBorder(roundedBorder);
+		bNews.setBorder(roundedBorder);
+		bCapFlow.setBorder(roundedBorder);
+		bAnalyzer.setBorder(roundedBorder);
+		
 		this.add(bQuote);
 		// 这里添加过的事情处理在上层关系中就没有必要添加了，因为在BigWise中的会同样被处理
 		bQuote.addActionListener(this);
@@ -42,22 +55,13 @@ public class HeaderPanel extends JPanel implements ActionListener {
 	}
 	
 	public static void main(String[] argv) {
-	    Vector rowData = new Vector();
-	    for (int i = 0; i < 10; i++) {
-	      Vector colData = new Vector(Arrays.asList("qq"));
-	      rowData.add(colData);
-	    }
-	    
-	    String[] columnNames = {"a","b","c"};
-	    int len = columnNames.length;
-	    
-	    Vector columnNamesV = new Vector(Arrays.asList(columnNames));
-
-	    JTable table = new JTable(rowData, columnNamesV);
-	    JFrame f = new JFrame();
-	    f.setSize(300, 300);
-	    f.add(new JScrollPane(table));
-	    f.setVisible(true);
+	   
+		JFrame frame = new JFrame("test");
+		Container c = frame.getContentPane();
+		c.add(new HeaderPanel(),"North");
+		c.setLayout(new FlowLayout());
+		frame.setSize(1100, 700);
+		frame.setVisible(true);
 	  }
 	
 		 	
