@@ -28,7 +28,7 @@ public class RTLine extends Canvas {
 	double MostMax;
 	double MostMin;
 	double OpenPrice;
-	double MaxTrade; // 最大成交量
+	double MaxTrade; // 最大成交量 
 
 	double xStep = 0;
 	double yStep = 0;

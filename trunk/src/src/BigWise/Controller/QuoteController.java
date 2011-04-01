@@ -86,13 +86,31 @@ public class QuoteController extends Observable {
 				double MinPrice = result.getDouble("MinPrice");
 				double TradeAccout = result.getDouble("TradeAccout");
 				double TotalTrade = result.getDouble("TotalTrade");
+				double b1 = result.getDouble("b1");
+				double bp1 = result.getDouble("bp1");
+				double b2 = result.getDouble("b2");
+				double bp2 = result.getDouble("bp2");
+				double b3 = result.getDouble("b3");
+				double bp3 = result.getDouble("bp3");
+				double b4 = result.getDouble("b4");
+				double bp4 = result.getDouble("bp4");
+				double b5 = result.getDouble("b5");
+				double bp5 = result.getDouble("bp5");
+				double s1 = result.getDouble("s1");
+				double sp1 = result.getDouble("sp1");
+				double s2 = result.getDouble("s2");
+				double sp2 = result.getDouble("sp2");
+				double s3 = result.getDouble("s3");
+				double sp3 = result.getDouble("sp3");
+				double s4 = result.getDouble("s4");
+				double sp4 = result.getDouble("sp4");
+				double s5 = result.getDouble("s5");
+				double sp5 = result.getDouble("sp5");
 				int color = result.getInt("Color");
 
 				StockQuoteData quote = new StockQuoteData(ID, code, name, date,
 						time, OpenPrice, ClosePrice, CurrentPrice, MaxPrice,
-						MinPrice, TradeAccout, TotalTrade, color, 0.0, 0.0,
-						0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-						0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+						MinPrice, TradeAccout, TotalTrade, color, b1,bp1,b2,bp2,b3,bp3,b4,bp4,b5,bp5,s1,sp1,s2,sp2,s3,sp3,s4,sp4,s5,sp5);
 				// System.out.println(quote.toString() );
 				quoteList.add(quote);
 			}

@@ -48,7 +48,7 @@ public class StockQuoteData {
 	public double HighPriceToday; // 今日最高价格
 	public double LowPriceToday; // 今日最低价格
 	public double TradeAccount; // 今日交易量
-	public double TotalTrade; 	// 今日交易金额
+	public double TotalTrade; // 今日交易金额
 	public double Buy1;
 	public double Buy2;
 	public double Buy3;
@@ -76,10 +76,10 @@ public class StockQuoteData {
 			String time, double openprice, double closeprice,
 			double currentPrice, double maxprice, double lowPrice,
 			double tradeaccout, double totaltrade, int color, double b1,
-			double b2, double b3, double b4, double b5, double bp1, double bp2,
-			double bp3, double bp4, double bp5, double s1, double s2,
-			double s3, double s4, double s5, double sp1, double sp2, double sp3,
-			double sp4, double sp5) {
+			double bp1, double b2, double bp2, double b3, double bp3,
+			double b4, double bp4, double b5, double bp5, double s1,
+			double sp1, double s2, double sp2, double s3, double sp3,
+			double s4, double sp4, double s5, double sp5) {
 		ID = id;
 		StockCode = code;
 		StockName = name;
@@ -101,7 +101,7 @@ public class StockQuoteData {
 		Buy3Price = bp3;
 		Buy4Price = bp4;
 		Buy5Price = bp5;
-		
+
 		Sell1 = s1;
 		Sell2 = s2;
 		Sell3 = s3;

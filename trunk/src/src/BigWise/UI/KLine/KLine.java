@@ -21,6 +21,10 @@ import BigWise.UI.Quote.QuoteDataBodyPanel;
 import BigWise.UI.RTLine.RTLine;
 
 public class KLine extends Canvas {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public HistoryController hc;
 	int xLength = 1000;
 	int yLength = 600;
@@ -59,12 +63,9 @@ public class KLine extends Canvas {
 
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(e.getX() + " || " + e.getY());
 				xCross = e.getX();
 				yCross = e.getY();
 				repaint();
-				
 			}
 		});
 

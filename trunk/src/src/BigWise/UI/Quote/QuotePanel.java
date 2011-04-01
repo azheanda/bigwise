@@ -21,6 +21,7 @@ public class QuotePanel extends JPanel implements Observer{
 	QuoteRTGraphBodyPanel	pQuoteRTGraphBodyPanel;
 	QuoteKGraphBodyPanel pQuoteKGraphPanel;
 	RTLine pRTPanel;
+	BuySellPie pBuySellPie;
 	public QuotePanel()
 	{
 		qc = QuoteController.getQuoteControllerInstance();
@@ -31,10 +32,15 @@ public class QuotePanel extends JPanel implements Observer{
 		pRTPanel = RTLine.getRTLine();
 		pRTLinePanel.add(pRTPanel);
 		
+		JPanel pRTBuySellPanel = new JPanel();
+		pBuySellPie = BuySellPie.getBuySellPie();
+		pRTBuySellPanel.add(pBuySellPie);
+		
 		jtp.addTab("分时图",	pRTLinePanel);
+		jtp.addTab("买卖图",	pRTBuySellPanel);
+		jtp.addTab("实时数据", pQuoteDataBodyPanel );
 		jtp.addTab("分时图",	pQuoteRTGraphBodyPanel);
 		jtp.addTab("实时K线图", pQuoteKGraphPanel);
-		jtp.addTab("实时数据", pQuoteDataBodyPanel );
 		add(jtp);
 		
 		qc.controller.addObserver(this);
@@ -49,6 +55,7 @@ public class QuotePanel extends JPanel implements Observer{
 	{
 		//System.out.println("update");
 		pRTPanel.refresh();
+		pBuySellPie.refresh();
 		pQuoteDataBodyPanel.refresh();
 		pQuoteRTGraphBodyPanel.refresh();
 		pQuoteKGraphPanel.refresh();
