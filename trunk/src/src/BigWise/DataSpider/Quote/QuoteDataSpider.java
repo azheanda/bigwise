@@ -15,17 +15,31 @@ import java.sql.*;
 public class QuoteDataSpider extends Thread {
 
 	public int day = 0;
-	public static int ID = 0;
-
+	public static int ID = 1;
+	public static Connection conn = null;
+	
+	// 代开一个行情蜘蛛
+	public static void open()
+	{
+		conn = DBUtil.getDbConn();
+	}
+	
+	// 关闭行情蜘蛛
+	public static void close()
+	{
+		DBUtil.closeConnection(conn);
+	}
+	
 	public static Vector<StockQuoteData> GetQuoteDataByKeyword(String type,
 			String keyword) throws IOException {
 
 		// 股票列表
 		Vector<StockInfo> StockList = StockInfo.getStockListByKeyword(type,
 				keyword);
+		
 		// 股票列表中的股票的只数
 		int StockNumber = StockList.size();
-		System.out.println(StockNumber);
+		
 
 		// 行情数据，59只股票的行情数据
 		Vector<StockQuoteData> QuoteDataList = new Vector<StockQuoteData>();
@@ -38,8 +52,6 @@ public class QuoteDataSpider extends Thread {
 		}
 
 		try {
-			Connection conn = DBUtil.getDbConn();
-
 			Statement stmt = conn.createStatement();
 
 			for (int i = 0; i < QuoteDataList.size(); ++i) {
@@ -54,8 +66,8 @@ public class QuoteDataSpider extends Thread {
 						+ "','" + name + "','" + date + "','" + time + "',"
 						+ quote.OpenPriceToday + "," + quote.ClosePriceYestoday
 						+ "," + quote.CurrentPrice + "," + quote.HighPriceToday
-						+ ", " + quote.LowPriceToday + "," + quote.TradeAccount
-						+ "," + quote.TotalTrade + ","
+						+ ", " + quote.LowPriceToday + "," + quote.TotalMoney
+						+ "," + quote.TotalNumber + ","
 						+ quote.Buy1 + "," + quote.Buy1Price + ","
 						+ quote.Buy2 + "," + quote.Buy2Price + ","
 						+ quote.Buy3 + "," + quote.Buy3Price + ","
@@ -72,10 +84,11 @@ public class QuoteDataSpider extends Thread {
 			}
 
 			stmt.close();
-			DBUtil.closeConnection(conn);
 			// System.out.println("finished");
-		} catch (SQLException ex) {
+		} 
+		catch (SQLException ex) {
 			System.out.println("failed");
+			
 		}
 
 		// 抓取次数累加
@@ -117,8 +130,8 @@ public class QuoteDataSpider extends Thread {
 		quoteData.HighPriceToday = Double.parseDouble(tmp[4]); // 今日最高价格
 		quoteData.LowPriceToday = Double.parseDouble(tmp[5]); // 今日最低价格
 
-		quoteData.TotalTrade = Double.parseDouble(tmp[8]); // 今日成交手数
-		quoteData.TradeAccount = Double.parseDouble(tmp[9]); // 今日总交易额
+		quoteData.TotalNumber = Double.parseDouble(tmp[8]); // 今日成交手数
+		quoteData.TotalMoney = Double.parseDouble(tmp[9]); // 今日总交易额
 
 		quoteData.Buy1 = Double.parseDouble(tmp[10]); // 买一
 		quoteData.Buy2 = Double.parseDouble(tmp[12]); // 买一
@@ -177,19 +190,24 @@ public class QuoteDataSpider extends Thread {
 		while (true) {
 			try {
 				if (Utility.IsMarketTime()) {
-					// 每隔5分钟抓取一次实时数据
-					System.out.println("catch RT data");
+					
+					QuoteDataSpider.open();
 					QuoteDataSpider.GetQuoteDataByKeyword("market", "*");
-					Thread.sleep(300000);
+					// 每隔1分钟抓取一次实时数据
+					Thread.sleep(60000);
 				} else {
 					// 不是市场时间，每隔半小时检测一次
 					System.out.println("Not Market Time");
 					Thread.sleep(120000);
 				}
-			} catch (IOException ex) {
+			}
+			catch (IOException ex) {
 				ex.printStackTrace();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+			}
+			finally{
+				QuoteDataSpider.close();
 			}
 		}
 

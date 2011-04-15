@@ -61,8 +61,8 @@ public class QuoteRTGraphSpider {
 		quoteData.CurrentPrice = Double.parseDouble(tmp[3]); 										// 现在价格
 		quoteData.HighPriceToday = Double.parseDouble(tmp[4]); 										// 今日最高价格
 		quoteData.LowPriceToday = Double.parseDouble(tmp[5]); 										// 今日最低价格
-		quoteData.TotalTrade = Double.parseDouble(tmp[8]); 											// 今日成交手数
-		quoteData.TradeAccount = Double.parseDouble(tmp[9]); 										//今日总交易额
+		quoteData.TotalNumber = Double.parseDouble(tmp[8]); 											// 今日成交手数
+		quoteData.TotalMoney = Double.parseDouble(tmp[9]); 										//今日总交易额
 		// 股票的涨跌是跟昨日收盘价格相比较
 		if(quoteData.CurrentPrice < quoteData.ClosePriceYestoday)
 			quoteData.StockColor = 2;//绿色
