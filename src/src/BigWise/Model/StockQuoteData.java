@@ -47,8 +47,8 @@ public class StockQuoteData {
 	public double CurrentPrice; // 当前价格格
 	public double HighPriceToday; // 今日最高价格
 	public double LowPriceToday; // 今日最低价格
-	public double TradeAccount; // 今日交易量
-	public double TotalTrade; // 今日交易金额
+	public double TotalMoney; // 今日交易金额
+	public double TotalNumber; // 今日交易量
 	public double Buy1;
 	public double Buy2;
 	public double Buy3;
@@ -112,8 +112,8 @@ public class StockQuoteData {
 		Sell3Price = sp3;
 		Sell4Price = sp4;
 		Sell5Price = sp5;
-		TradeAccount = tradeaccout;
-		TotalTrade = totaltrade;
+		TotalNumber = tradeaccout;
+		TotalMoney = totaltrade;
 		StockColor = color;
 	}
 
@@ -125,7 +125,7 @@ public class StockQuoteData {
 		return StockCode + " | " + StockName + " | " + StockDate + " | "
 				+ StockTime + " | " + OpenPriceToday + " | "
 				+ ClosePriceYestoday + " | " + CurrentPrice + " | "
-				+ HighPriceToday + " | " + LowPriceToday + " | " + TotalTrade
-				+ " | " + TradeAccount + "| " + StockColor;
+				+ HighPriceToday + " | " + LowPriceToday + " | " + TotalNumber
+				+ " | " + TotalMoney + "| " + StockColor;
 	}
 }

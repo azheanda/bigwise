@@ -1,20 +1,19 @@
-package BigWise.UI.RTLine;
+package BigWise.UI.Analyzer;
+
+/*
+ * 一个是徐小明的123求4 一个是根据反抽理论的1/2算法（或2/5、3/5算法;以下统一称1/2算法）
+ */
 
 import java.awt.*;
-
 import javax.swing.*;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.Vector;
 
 import BigWise.Controller.Controller;
 import BigWise.Controller.QuoteController;
-import BigWise.DataSpider.*;
 import BigWise.Model.StockQuoteData;
 
-public class RTLine extends Canvas {
+public class DKData extends Canvas {
 	// 实时行情控制器
 	public QuoteController qc;
 	public Controller controller;
@@ -46,8 +45,7 @@ public class RTLine extends Canvas {
 	// 格式刷
 	DecimalFormat df = new DecimalFormat("0.00");
 
-	public RTLine() {
-		
+	public DKData() {
 		qc = QuoteController.getQuoteControllerInstance();
 		controller = Controller.getControllerInstance();
 		number = qc.number;
@@ -210,8 +208,8 @@ public class RTLine extends Canvas {
 		repaint();
 	}
 
-	public static RTLine getRTLine() {
-		return new RTLine();
+	public static DKData getRTLine() {
+		return new DKData();
 	}
 
 	public static void main(String args[]) {
@@ -219,10 +217,11 @@ public class RTLine extends Canvas {
 		Container c = frame.getContentPane();
 
 		JPanel p = new JPanel();
-		p.add(new RTLine());
+		p.add(new DKData());
 		c.add(p);
 		c.setLayout(new FlowLayout());
 		frame.setSize(1100, 700);
 		frame.setVisible(true);
 	}
 }
+

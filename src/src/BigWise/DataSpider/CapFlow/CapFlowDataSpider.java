@@ -22,7 +22,6 @@ public class CapFlowDataSpider {
 		// 资金流数据 成交明细
 		Vector<StockCapFlowDetail> CapFlowDetailList = new Vector<StockCapFlowDetail>();
 		
-	
 		
 		String market = Utility.getMarket(code);
 		

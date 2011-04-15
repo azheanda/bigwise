@@ -71,9 +71,9 @@ public class HistoryPanel extends JPanel implements Observer{
 		pHistoryMonthlyKLinePanel.refresh();
 	}
 	
-	public HistoryPanel HistoryPanel()
+	public HistoryPanel getHistoryPanel()
 	{
-		return this;
+		return new HistoryPanel();
 	}
 	
 

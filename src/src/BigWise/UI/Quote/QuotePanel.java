@@ -22,6 +22,9 @@ public class QuotePanel extends JPanel implements Observer{
 	QuoteKGraphBodyPanel pQuoteKGraphPanel;
 	RTLine pRTPanel;
 	BuySellPie pBuySellPie;
+	QuoteRankBodyPanel pRankPanel;							// 沪深排行榜
+	QuoteProfitRankBodyPanel pSYLPanel;						// 收益率
+	JPanel pSJLPanel;			// 市净率
 	public QuotePanel()
 	{
 		qc = QuoteController.getQuoteControllerInstance();
@@ -36,11 +39,16 @@ public class QuotePanel extends JPanel implements Observer{
 		pBuySellPie = BuySellPie.getBuySellPie();
 		pRTBuySellPanel.add(pBuySellPie);
 		
+		pRankPanel = new QuoteRankBodyPanel();
+		pSYLPanel = new QuoteProfitRankBodyPanel();
+		pSJLPanel = new JPanel();
 		jtp.addTab("分时图",	pRTLinePanel);
-		jtp.addTab("买卖图",	pRTBuySellPanel);
-		jtp.addTab("实时数据", pQuoteDataBodyPanel );
-		jtp.addTab("分时图",	pQuoteRTGraphBodyPanel);
 		jtp.addTab("实时K线图", pQuoteKGraphPanel);
+		jtp.addTab("买卖图",	pRTBuySellPanel);
+		jtp.addTab("沪深数据概览", pQuoteDataBodyPanel );
+		jtp.addTab("实时沪深排行榜",pRankPanel);
+		jtp.addTab("实时收益率排行", pSYLPanel );
+
 		add(jtp);
 		
 		qc.controller.addObserver(this);

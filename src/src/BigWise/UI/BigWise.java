@@ -28,7 +28,7 @@ public   class   BigWise   {
     
     NavPanel navPanel;
     
-    StatePanel indexPanel;
+    IndexPanel indexPanel;
     public void init()
     {
     	mainFrame = new JFrame("BigWise");
@@ -43,7 +43,7 @@ public   class   BigWise   {
 		thisContainer.add(navPanel,"West");
 		
 		// 底部大盘纵观指数栏
-		indexPanel = new StatePanel();
+		indexPanel = new IndexPanel();
 		thisContainer.add(indexPanel,"South");
 		
 

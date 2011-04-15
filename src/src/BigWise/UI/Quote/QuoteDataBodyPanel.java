@@ -27,6 +27,9 @@ import BigWise.Model.*;
 import java.text.DecimalFormat;
 import java.lang.Math;
 
+/*
+ *  沪深数据概览
+ */
 
 public class QuoteDataBodyPanel extends JPanel implements ActionListener{
    
@@ -51,6 +54,7 @@ public class QuoteDataBodyPanel extends JPanel implements ActionListener{
 	    
 	    pContentPane = new JScrollPane(tTable);
 	    pContentPane.setPreferredSize(new   Dimension(1000,30*(int)(qc.ROWPERPAGE + 1))); 
+	    
 	    this.add(pContentPane);
 	    
 	    pDownPanel = new JPanel();
@@ -66,7 +70,7 @@ public class QuoteDataBodyPanel extends JPanel implements ActionListener{
 	public void init()
 	{
 		
-		DefaultTableModel model = qc.GetModel();
+		DefaultTableModel model = qc.GetNewestModel();
 	    tTable = makeTable(model);
 	}
 	
@@ -143,11 +147,11 @@ public class QuoteDataBodyPanel extends JPanel implements ActionListener{
 							//设置奇偶行颜色
 						     if (row % 2 == 0){
 						    	 //setBackground(new Color(185,215,250)); // 设置奇数行底色
-						    	 //setBackground(Color.BLACK);
+						    	 setBackground(Color.BLACK);
 						     }
 						     else if (row % 2 == 1){
 						    	 //setBackground(new Color(237, 237, 237)); // 设置偶数行底色
-						    	// setBackground(Color.BLACK); // 设置偶数行底色
+						    	setBackground(Color.BLACK); // 设置偶数行底色
 						     }
 						         
 						     //如果为数值则居中对齐

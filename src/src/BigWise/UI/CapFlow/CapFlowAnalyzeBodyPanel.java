@@ -28,7 +28,7 @@ import java.text.DecimalFormat;
 import java.lang.Math;
 
 
-public class CapFlowDetailBodyPanel extends JPanel implements ActionListener,ListSelectionListener{
+public class CapFlowAnalyzeBodyPanel extends JPanel implements ActionListener,ListSelectionListener{
    
 	public CapFlowController cfc;
 
@@ -43,7 +43,7 @@ public class CapFlowDetailBodyPanel extends JPanel implements ActionListener,Lis
     JButton bPrevious = new JButton("…œ“ª“≥");
     
     
-	public CapFlowDetailBodyPanel()
+	public CapFlowAnalyzeBodyPanel()
 	{
 		cfc = CapFlowController.getCapFlowController();
 		
@@ -180,7 +180,7 @@ public class CapFlowDetailBodyPanel extends JPanel implements ActionListener,Lis
 	 public static void main(String args[]) {
 		    JFrame frame = new JFrame("QuoteBodyPanel");
 		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		    CapFlowDetailBodyPanel tmp = new CapFlowDetailBodyPanel();
+		    CapFlowAnalyzeBodyPanel tmp = new CapFlowAnalyzeBodyPanel();
 		    frame.add(tmp);
 		    frame.setSize(1000,720);
 		    frame.setVisible(true);

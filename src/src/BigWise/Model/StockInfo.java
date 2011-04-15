@@ -5,11 +5,11 @@ import BigWise.Utility.DBUtil;
 import java.sql.*;
 public class StockInfo {
 	
-	public String code;				// 股票名称
-	public String name;				// 股票代码
+	public String code;					// 股票名称
+	public String name;					// 股票代码
 	public String market;				// 股票市场
-	public String industry;					// 股票行业（行业板块）
-	public String province;					// 股票的省份（省份板块）
+	public String industry;				// 股票行业（行业板块）
+	public String province;				// 股票的省份（省份板块）
 	
 	// 全属性的股票列表
 	public StockInfo(String code,String name, String market, String industry, String province)
